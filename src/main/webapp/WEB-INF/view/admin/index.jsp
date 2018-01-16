@@ -160,7 +160,7 @@
                     </c:forEach>--%>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('', '');">商品管理</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('', '');">分类管理</a></li>
-                    <li><a class="waves-effect" href="javascript:Tab.addTab('', '');">品牌管理</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('品牌管理', '/goods/brand/index');">品牌管理</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('类型管理', '/goods/type/index');">类型管理</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('规格管理', '/goods/specification/index');">规格管理</a></li>
                 </ul>
