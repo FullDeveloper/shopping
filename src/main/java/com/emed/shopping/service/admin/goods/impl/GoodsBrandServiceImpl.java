@@ -1,7 +1,7 @@
 package com.emed.shopping.service.admin.goods.impl;
 
 import com.emed.shopping.base.BaseServiceImpl;
-import com.emed.shopping.dao.model.admin.ShopGoodsBrand;
+import com.emed.shopping.dao.model.admin.goods.ShopGoodsBrand;
 import com.emed.shopping.service.admin.goods.GoodsBrandService;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,6 @@
 package com.emed.shopping.controller.admin.goods;
 
-import com.emed.shopping.dao.model.admin.ShopGoodsSpecification;
-import com.emed.shopping.dao.model.admin.ShopGoodsType;
+import com.emed.shopping.dao.model.admin.goods.ShopGoodsSpecification;
 import com.emed.shopping.service.admin.goods.GoodsSpecificationService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;

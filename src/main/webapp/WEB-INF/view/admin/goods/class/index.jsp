@@ -38,7 +38,7 @@
     $(function() {
         // bootstrap table初始化
         $table.bootstrapTable({
-            url: '${basePath}/goods/specification/list',
+            url: '${basePath}/goods/class/list',
             height: getHeight(),
             striped: true,
             search: true,
@@ -63,8 +63,10 @@
             columns: [
                 {field: 'ck', checkbox: true},
                 {field: 'sort', title: '排序', sortable: true, align: 'center'},
-                {field: 'name', title: '规格名称',align: 'center'},
-                {field: 'name', title: '规格值',align: 'center'},
+                {field: 'name', title: '分类名称',align: 'center'},
+                {field: 'name', title: '类型',align: 'center'},
+                {field: 'name', title: '显示',align: 'center'},
+                {field: 'name', title: '推荐',align: 'center'},
                 {field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}
             ]
         });

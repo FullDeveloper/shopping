@@ -146,23 +146,23 @@
             </li>
             <%--<li class="sub-menu system_menus system_${upmsPermission.systemId} ${status.index}" <c:if test="${upmsPermission.systemId != 1}">style="display:none;"</c:if>>--%>
             <li class="sub-menu system_menus system_1">
-                <%--<a class="waves-effect" href="javascript:;"><i class="${upmsPermission.icon}"></i> ${upmsPermission.name}</a>--%>
                 <a class="waves-effect" href="javascript:;"><i class=""></i>商品信息管理</a>
                 <ul>
-                    <%--<c:forEach var="subUpmsPermission" items="${upmsPermissions}">
-                        <c:if test="${subUpmsPermission.pid == upmsPermission.permissionId}">
-                            <c:forEach var="upmsSystem" items="${upmsSystems}">
-                                <c:if test="${subUpmsPermission.systemId == upmsSystem.systemId}">
-                                    <c:set var="systemBasePath" value="${upmsSystem.basepath}"/></c:if>
-                            </c:forEach>
-                            <li><a class="waves-effect" href="javascript:Tab.addTab('${subUpmsPermission.name}', '${systemBasePath}${subUpmsPermission.uri}');">${subUpmsPermission.name}</a></li>
-                        </c:if>
-                    </c:forEach>--%>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('', '');">商品管理</a></li>
-                    <li><a class="waves-effect" href="javascript:Tab.addTab('', '');">分类管理</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('分类管理', '/goods/class/index');">分类管理</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('品牌管理', '/goods/brand/index');">品牌管理</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('类型管理', '/goods/type/index');">类型管理</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('规格管理', '/goods/specification/index');">规格管理</a></li>
+                </ul>
+            </li>
+            <li class="sub-menu system_menus system_1">
+                <a class="waves-effect" href="javascript:;"><i class=""></i>店铺管理</a>
+                <ul>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('', '');">卖家信用</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('分类管理', '/goods/class/index');">店铺管理</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('品牌管理', '/goods/brand/index');">店铺模板</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('类型管理', '/goods/type/index');">店铺类型</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('规格管理', '/goods/specification/index');">店铺分类</a></li>
                 </ul>
             </li>
             <%--<c:forEach var="upmsPermission" items="${upmsPermissions}" varStatus="status">

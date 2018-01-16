@@ -1,4 +1,4 @@
-package com.emed.shopping.dao.model.admin;
+package com.emed.shopping.dao.model.admin.goods;
 
 import com.emed.shopping.base.BaseModel;
 

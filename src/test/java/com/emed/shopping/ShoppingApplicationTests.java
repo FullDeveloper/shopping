@@ -1,14 +1,12 @@
 package com.emed.shopping;
 
-import com.emed.shopping.dao.mapper.admin.ShopGoodsTypeMapper;
-import com.emed.shopping.dao.model.admin.ShopGoodsType;
+import com.emed.shopping.dao.model.admin.goods.ShopGoodsType;
 import com.emed.shopping.service.admin.goods.GoodsTypeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.emed.shopping.service.admin.goods;
 
 import com.emed.shopping.base.BaseService;
-import com.emed.shopping.dao.model.admin.ShopGoodsBrand;
+import com.emed.shopping.dao.model.admin.goods.ShopGoodsBrand;
 
 /**
  * @Author: 周润斌
