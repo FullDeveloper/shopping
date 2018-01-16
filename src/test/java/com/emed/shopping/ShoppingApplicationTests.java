@@ -1,12 +1,14 @@
 package com.emed.shopping;
 
-import com.emed.shopping.dao.mapper.admin.CityMapper;
-import com.emed.shopping.dao.model.admin.City;
+import com.emed.shopping.dao.mapper.admin.ShopGoodsTypeMapper;
+import com.emed.shopping.dao.model.admin.ShopGoodsType;
+import com.emed.shopping.service.admin.goods.GoodsTypeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -15,15 +17,17 @@ import java.util.List;
 public class ShoppingApplicationTests {
 
 	@Autowired
-	private CityMapper cityMapper;
+	private GoodsTypeService goodsTypeService;
 
 	@Test
 	public void contextLoads() {
-		List<City> cityList =  cityMapper.selectAll();
-		for(City city : cityList){
+		ShopGoodsType type = new ShopGoodsType();
+		type.setName("服装");
+		List<ShopGoodsType> cityList =  goodsTypeService.select(type," sort desc");
+		for(ShopGoodsType city : cityList){
 			System.out.println(city.getName());
 			System.out.println(city.getId());
-			System.out.println(city.getState());
+			System.out.println(city.getCreateTime());
 		}
 	}
 
