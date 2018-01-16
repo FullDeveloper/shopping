@@ -1,6 +1,6 @@
-package com.emed.shopping.dao.mapper.admin;
+package com.emed.shopping.dao.mapper.admin.goods;
 
-import com.emed.shopping.dao.model.admin.ShopGoodsSpecification;
+import com.emed.shopping.dao.model.admin.goods.ShopGoodsSpecification;
 import com.emed.shopping.util.CommonMapper;
 
 /**

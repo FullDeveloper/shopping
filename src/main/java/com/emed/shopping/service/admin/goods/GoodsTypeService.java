@@ -1,8 +1,7 @@
 package com.emed.shopping.service.admin.goods;
 
 import com.emed.shopping.base.BaseService;
-import com.emed.shopping.dao.model.admin.ShopGoodsType;
-import tk.mybatis.mapper.entity.Example;
+import com.emed.shopping.dao.model.admin.goods.ShopGoodsType;
 
 /**
  * @Author: 周润斌

@@ -1,12 +1,11 @@
 package com.emed.shopping.controller.admin.goods;
 
-import com.emed.shopping.dao.model.admin.goods.ShopGoodsSpecification;
-import com.emed.shopping.service.admin.goods.GoodsSpecificationService;
+import com.emed.shopping.dao.model.admin.goods.ShopGoodsBrand;
+import com.emed.shopping.service.admin.goods.GoodsBrandService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -15,20 +14,20 @@ import java.util.Map;
 
 /**
  * @Author: 周润斌
- * @Date: create in 上午 10:55 2018/1/16 0016
- * @Description: 商品规格控制器
+ * @Date: create in 上午 11:53 2018/1/16 0016
+ * @Description:
  */
 @Controller
-@RequestMapping(value = "/goods/specification")
-public class GoodsSpecificationController {
+@RequestMapping(value = "/goods/brand")
+public class GoodsBrandController {
 
     @Autowired
-    private GoodsSpecificationService goodsSpecificationService;
+    private GoodsBrandService goodsBrandService;
 
-    @RequestMapping(value = "/index",method = RequestMethod.GET)
+    @RequestMapping(value = "/index")
     public String index(){
 
-        return "/admin/goods/specification/index";
+        return "/admin/goods/brand/index";
     }
 
     @RequestMapping(value = "/list")
@@ -38,7 +37,7 @@ public class GoodsSpecificationController {
             @RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
             @RequestParam(required = false, value = "sort") String sort,
             @RequestParam(required = false, value = "order") String order) {
-        PageInfo<ShopGoodsSpecification> pageInfo = goodsSpecificationService.selectPage(offset, limit, new ShopGoodsSpecification(), sort + " " + order);
+        PageInfo<ShopGoodsBrand> pageInfo = goodsBrandService.selectPage(offset, limit, new ShopGoodsBrand(), sort + " " + order);
         Map<String, Object> result = new HashMap<>(2);
         result.put("rows", pageInfo.getList());
         result.put("total", pageInfo.getTotal());

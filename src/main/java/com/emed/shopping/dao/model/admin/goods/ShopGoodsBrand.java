@@ -1,4 +1,4 @@
-package com.emed.shopping.dao.model.admin;
+package com.emed.shopping.dao.model.admin.goods;
 
 import com.emed.shopping.base.BaseModel;
 
@@ -12,15 +12,25 @@ import java.util.Date;
 public class ShopGoodsBrand extends BaseModel {
 
     private String name;
+
     private Long Accessory_id;
+
     private String recommend;
+
     private String audit;
+
     private Long userId;
+
     private Long categoryId;
+
     private String wechatShopRecommend;
+
     private Date wechatShopRecommendTime;
+
     private Integer sort;
+
     private String firstWord;
+
     private String remark;
 
     public String getName() {
