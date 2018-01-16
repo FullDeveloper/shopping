@@ -116,10 +116,10 @@
         <div class="s-profile">
             <a class="waves-effect waves-light" href="javascript:;">
                 <div class="sp-pic">
-                    <img src="${basePath}${upmsUser.avatar}"/>
+                    <img src="/resources/common/images/avatar.jpg"/>
                 </div>
                 <div class="sp-info">
-                    ${upmsUser.realname}，您好！
+                    管理员，您好！
                     <i class="zmdi zmdi-caret-down"></i>
                 </div>
             </a>
@@ -161,7 +161,8 @@
                     <li><a class="waves-effect" href="javascript:Tab.addTab('', '');">商品管理</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('', '');">分类管理</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('', '');">品牌管理</a></li>
-                    <li><a class="waves-effect" href="javascript:Tab.addTab('', '');">类型管理</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('类型管理', '/goods/type/index');">类型管理</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('规格管理', '/goods/specification/index');">规格管理</a></li>
                 </ul>
             </li>
             <%--<c:forEach var="upmsPermission" items="${upmsPermissions}" varStatus="status">
