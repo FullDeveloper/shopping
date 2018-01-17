@@ -1,9 +1,14 @@
-package com.emed.shopping.dao.model.admin.goods;
+package com.emed.shopping.dao.model.admin.system;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
 
 public class ShopAccessory implements Serializable {
+    @Id
+    @GeneratedValue(generator = "JDBC")
     private Long id;
 
     /**

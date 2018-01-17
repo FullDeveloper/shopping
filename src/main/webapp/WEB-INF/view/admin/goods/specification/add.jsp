@@ -188,15 +188,22 @@
 
     function saveForm() {
         $("#count").val(count);
+        var form = new FormData(document.getElementById("saveForm"));
         $.ajax({
-            type: 'post',
-            url: '/goods/specification/save',
-            data: $("form").serialize(),
-            success: function(data) {
-
+            url:"${pageContext.request.contextPath}/goods/specification/save",
+            type:"post",
+            data:form,
+            processData:false,
+            contentType:false,
+            success:function(data){
+                if(data.code == 1){
+                    alert(data.message);
+                    window.location.href = "${basePath}/goods/sepcification/index";
+                }
+            },
+            error:function(e){
             }
         });
-
     }
 
 </script>

@@ -1,5 +1,6 @@
 package com.emed.shopping.base;
 
+import com.emed.shopping.util.CommonUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.entity.Example;
 
 import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,9 +33,9 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public List<T> select(T record, String order) {
-        Example example = new Example(record.getClass(),false);
+        Example example = new Example(record.getClass(), false);
         Example.Criteria criteria = example.createCriteria();
-        dealWithExample(record,criteria);
+        dealWithExample(record, criteria);
         example.setOrderByClause(order);
         return mapper.selectByExample(example);
     }
@@ -51,13 +53,11 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     @Override
     public T selectOne(T record) {
         List<T> list = mapper.select(record);
-        if(list != null && list.size() == 1){
+        if (list != null && list.size() == 1) {
             return list.get(0);
         }
         return null;
     }
-
-
 
 
     @Override
@@ -93,30 +93,55 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     @Override
     public int save(T record) {
         int count = 0;
-
+        Class clazz = record.getClass();
+        //获取类中的所有属性
+        Field[] fs = clazz.getDeclaredFields();
+        Object id = null;
+        for (int i = 0; i < fs.length; i++) {
+            try {
+                Field f = fs[i];
+                f.setAccessible(true); //设置些属性是可以访问的
+                if (f.getName().equals("deleteStatus")) {
+                    f.set(record, "0");
+                }
+                if(f.getName().equals("createTime")){
+                    f.set(record,new Date());
+                }
+                if (f.getName().equals("id")) {
+                    id = f.get(record);
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        if (CommonUtil.isEmpty(id)) {
+            insert(record);
+        } else {
+            updateByPrimaryKeySelective(record);
+        }
         return count;
     }
 
     @Override
     public PageInfo<T> selectPage(int pageNum, int pageSize, T record, String orderStr) {
-        Example example = new Example(record.getClass(),false);
+        Example example = new Example(record.getClass(), false);
         Example.Criteria criteria = example.createCriteria();
-        dealWithExample(record,criteria);
+        dealWithExample(record, criteria);
         example.setOrderByClause(orderStr);
         PageHelper.startPage(pageNum, pageSize);
         List<T> list = mapper.selectByExample(example);
         return new PageInfo<T>(list);
     }
 
-    public void dealWithExample(T record,Example.Criteria criteria){
+    public void dealWithExample(T record, Example.Criteria criteria) {
         Class clazz = record.getClass();
         //获取类中的所有属性
         Field[] fs = clazz.getDeclaredFields();
-        for(int i = 0 ; i < fs.length; i++){
+        for (int i = 0; i < fs.length; i++) {
             Field f = fs[i];
             f.setAccessible(true); //设置些属性是可以访问的
             try {
-                if(StringUtils.isEmpty(f.get(record))){
+                if (StringUtils.isEmpty(f.get(record))) {
                     continue;
                 }
                 criteria.andEqualTo(f.getName(), f.get(record));
@@ -134,7 +159,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
         return new PageInfo<T>(list);
     }
 
-    private T notNullStrVerify(T record){
+    private T notNullStrVerify(T record) {
         return null;
     }
 
