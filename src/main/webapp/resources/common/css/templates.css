@@ -1,0 +1,268 @@
+body {
+    color: #555;
+    font: 12px "Microsoft Yahei", "Lucida Grande", Verdana, Lucida, Helvetica, Arial, 'Simsun', sans-serif;
+    background: #FFF;
+    word-wrap: break-word;
+    outline: none;
+    overflow-x: hidden;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-size: 14px;
+    padding: 0px;
+    margin: 0px;
+}
+.head-text{
+    border-top: 1px solid #B8E2FB;
+    height: 35px;
+    border-bottom: 1px solid #B8E2FB;
+    line-height: 35px;
+    padding-left: 40px;
+    color: #088DC8;
+    background: url(images/d.jpg) no-repeat 20px center #E8F6FF;
+    margin: 5px;
+}
+.tab {
+    height: 27px;
+    margin: 5px;
+    margin-top: 15px;
+}
+.tab-one {
+    background: url(images/tab1.jpg) no-repeat;
+    display: block;
+    width: 12px;
+    height: 27px;
+    float: left;
+}
+
+.specification {
+    width: 100%;
+    padding-top: 20px;
+    clear: both;
+    overflow: hidden;
+}
+
+.specification h2 {
+    border-top: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+    background: #E8F2F9;
+    height: 30px;
+    line-height: 30px;
+    color: #09C;
+    padding-left: 20px;
+}
+
+.addsx_table {
+    width: 100%;
+    padding-top: 10px;
+    border-bottom: 2px solid #DDDDDD;
+    border-collapse: collapse;
+}
+
+.addsx_table tr {
+    height: 40px;
+}
+
+.addsx_table td {
+    border-bottom: 1px solid #EEEEEE;
+    padding-left: 10px;
+}
+
+.size7 input {
+    width: 260px;
+}
+
+.newclass {
+    background: url(images/newclass.jpg) no-repeat;
+    padding-left: 15px;
+    font-weight: bold;
+}
+
+.newclass a {
+    color: #2A7AD2;
+}
+
+.liul span {
+    float: left;
+    text-align: center;
+    padding-top: 3px;
+}
+
+.size13 input {
+    width: 200px;
+    background: #FFF;
+    height: 25px;
+    line-height: 25px;
+    padding-left: 5px;
+    border: 1px solid #c3d7ef;
+}
+
+.pic_spe img {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #dddddd;
+    padding: 2px;
+}
+
+.pic_spe {
+    width: 20px;
+    float: left;
+    height: 20px;
+    display: block;
+    margin-left: 20px;
+    margin-top: 2px;
+}
+
+.filebtn input {
+    margin-left: 5px;
+    background: url(images/filebtn.jpg) no-repeat;
+    width: 64px;
+    height: 27px;
+    border: 0px;
+}
+
+.file input {
+    width: 261px;
+    height: 27px;
+    opacity: 0;
+    filter: Alpha(Opacity=0);
+    position: absolute;
+    margin-left: -261px;
+}
+
+.ac8 a {
+    color: #2A7AD2;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
+.submit input {
+    background: url(images/tj.jpg) no-repeat;
+    width: 66px;
+    height: 28px;
+    border: 0px;
+    margin-top: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.tab-two {
+    background: url(images/tab2.jpg) no-repeat;
+    display: block;
+    width: 12px;
+    height: 27px;
+    float: left;
+}
+
+.tabs {
+    height: 27px;
+    display: block;
+    float: left;
+    background: #BFEFFD;
+    line-height: 27px;
+}
+
+.tabs a {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+.tabs .this {
+    background: #088CCA;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #fff;
+    border-radius: 4px 4px 4px 4px;
+}
+
+.edit {
+    width: 100%;
+    padding-left: 10px;
+}
+ol, ul, li {
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+}
+ul {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+}
+.edit-input ul li {
+    line-height: 30px;
+}
+.set3 {
+    clear: both;
+}
+
+.spec_type {
+    clear: both;
+}
+
+.spec_type h3 {
+    font-size: 12px;
+    font-weight: lighter;
+    padding-top: 20px;
+}
+
+.ssp1, .ssp2 {
+    padding-top: 5px;
+    margin-right: 10px;
+}
+
+.edit-input ul li .span-red {
+    color: #F00;
+    font-weight: bolder;
+    font-size: 16px;
+}
+.pxnum input {
+    width: auto;
+    height: 22px;
+    line-height: 22px;
+    padding-left: 5px;
+    border: 1px solid #c3d7ef;
+}
+input[type="text"], input[type="password"], textarea, select {
+    padding: 2px 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    resize: none;
+}
+
+.nothis .w {
+    background: #E1F2F9;
+    height: 27px;
+    line-height: 27px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 1px;
+    color: #666;
+}
+
+.nothis strong {
+    font-weight: lighter;
+    display: block;
+    float: left;
+}
+.nothis .q {
+    background: url(images/nothis1.jpg) repeat;
+    width: 15px;
+    height: 28px;
+    margin-left: 20px;
+}
+.nothis .c {
+    background: url(images/nothis2.jpg) no-repeat;
+    width: 10px;
+    height: 28px;
+}
+
+.set3 span {
+    float: left;
+}
