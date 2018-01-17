@@ -159,7 +159,7 @@
                 <a class="waves-effect" href="javascript:;"><i class=""></i>店铺管理</a>
                 <ul>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('', '');">卖家信用</a></li>
-                    <li><a class="waves-effect" href="javascript:Tab.addTab('分类管理', '/goods/class/index');">店铺管理</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('分类管理', '/store/manager/index');">店铺管理</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('品牌管理', '/goods/brand/index');">店铺模板</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('类型管理', '/goods/type/index');">店铺类型</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('规格管理', '/goods/specification/index');">店铺分类</a></li>

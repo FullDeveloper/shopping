@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.emed.shopping.dao.mapper.admin.store.ShopStoreMapper" >
+
+
+    <select id="getAllStoreList" resultType="map">
+    SELECT
+      ss.store_name  AS storeName,
+      ss.store_ower  AS storeOwer,
+      su.user_name   AS userName,
+      sa.area_name   AS areaName,
+      (SELECT
+         area_name
+       FROM shop_area
+       WHERE id = sa.parent_id) AS parentName,
+      ssc.class_name AS className
+    FROM shop_store ss
+      LEFT JOIN shop_area sa
+        ON sa.id = ss.area_id
+      LEFT JOIN shop_user su
+        ON ss.id = su.store_id
+      LEFT JOIN shop_store_class ssc
+    ON ss.sc_id = ssc.id
+
+    </select>
+
+</mapper>
