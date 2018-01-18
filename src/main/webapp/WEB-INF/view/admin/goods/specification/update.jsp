@@ -19,8 +19,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>新增规格</title>
+    <title>编辑规格</title>
     <link href="${basePath}/resources/common/css/templates.css" rel="stylesheet"/>
+    <link href="${basePath}/resources/common/plugins/jquery-confirm/jquery-confirm.min.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
@@ -30,7 +31,7 @@
         <span class="tabs">
             <a href="/goods/specification/index">管理</a>
             |
-            <a href="#" class="this">新增</a>
+            <a href="#" class="this">编辑</a>
         </span>
         <span class="tab-two"></span>
     </div>
@@ -44,7 +45,7 @@
                     </li>
                     <li>
                         <span class="pxnum">
-                            <input name="name" type="text" id="name" value=""/>
+                            <input name="name" type="text" id="name" value="${specification.name}"/>
                         </span>
                         <span class="nothis">
                             <strong class="q"></strong>
@@ -60,7 +61,8 @@
                     </li>
                     <li>
                         <span class="pxnum">
-                            <input name="sort" type="text" id="sort" value=""/>
+                            <input name="sort" type="text" id="sort" value="${specification.sort}"/>
+                            <input name="id" type="hidden" id="id" value="${specification.id}"/>
                         </span>
                         <span class="nothis">
                             <strong class="q"></strong>
@@ -75,10 +77,12 @@
                 <ul class="set3">
                     <li>
                         <span class="ssp1">
-                            <input name="type" type="radio" id="type1" value="text" checked="checked"  onclick="img_spec('0')"/>文字
+                            <input name="type" type="radio" id="type1" value="text"
+                                    <c:if test="${specification.type eq 'text'}"> checked="checked"</c:if>  onclick="img_spec('0')"/>文字
                         </span>
                         <span class="ssp2">
-                            <input name="type" id="type2" type="radio" value="img" onclick="img_spec('1')"/>图片
+                            <input name="type" id="type2" type="radio" value="img"
+                                    <c:if test="${specification.type eq 'img'}"> checked="checked"</c:if> onclick="img_spec('1')"/>图片
                         </span>
                         <span class="nothis">
                             <strong class="q"></strong>
@@ -97,35 +101,38 @@
                         <td width="558"><strong><div id="goods_spec_property_img_">规格图片</div></strong></td>
                         <td  align="center">操作</td>
                     </tr>
+                    <c:forEach items="${properties}" var="item" varStatus="status">
                     <tr id="goods_spec_property">
                         <td width="82">
                             <span class="pxnum size5">
-                                <input name="sequence_1" type="text" id="sequence_1" value=""/>
+                                <input name="sequence_${status.count}" type="text" id="sequence_${status.count}" value="${item.sort}"/>
+                                <input name="id_${status.count}" type="hidden" id="id_${status.count}" value="${item.id}"/>
                             </span>
                         </td>
                         <td width="271">
                             <span class="pxnum size7">
-                                <input name="value_1" type="text" id="value_1" value=""/>
+                                <input name="value_${status.count}" type="text" id="value_${status.count}" value="${item.value}"/>
                             </span>
                         </td>
                         <td width="558" class="liul" >
                             <div id="goods_spec_property_img_">
                                 <span class="size13">
-                                    <input name="textfield_1" type="text" id="textfield_1" />
+                                    <input name="textfield_${status.count}" type="text" id="textfield_${status.count}" />
                                  </span>
                                 <span class="filebtn">
                                     <input name="button" type="button" id="button1"/>
                                  </span>
                                 <span style="float:left;" class="file" >
-                                    <input name="specImage_1" type="file" id="specImage_1" size="30"  onchange="change_img(this);"/>
+                                    <input name="specImage_${status.count}" type="file" id="specImage_${status.count}" size="30"  onchange="change_img(this);"/>
                                 </span>
                                 <span class="pic_spe">
-                                    <img id="image_1" name="image_1" src="${basePath}/resources/style/common/images/transparent.gif" width="16" height="16"/>
+                                    <img id="image_${status.count}" name="image_${status.count}" src="${basePath}/" width="16" height="16"/>
                                 </span>
                             </div>
                         </td>
-                        <td width="116" align="center" class="ac8"><a href="javascript:void(0);" onclick="remove_goods_spec_property(this.parentNode.parentNode,'')">删除</a></td>
+                        <td width="116" align="center" class="ac8"><a href="javascript:void(0);" onclick="remove_goods_spec_property(this.parentNode.parentNode,${item.id})">删除</a></td>
                     </tr>
+                    </c:forEach>
                     <tr>
                         <td colspan="3"><span class="newclass"><a href="javascript:void(0);" onclick="add_goods_spec_property();">新增规格值</a></span></td>
                         <td>&nbsp;</td>
@@ -143,7 +150,12 @@
 <script src="${basePath}/resources/common/js/util.js"></script>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
 <script>
-
+    var count = 1;
+    var size = ${fn:length(properties)};
+     if(size > 1){
+         count = size;
+     }
+     console.log("count=",count);
     $(function() {
         var type=jQuery(":radio:checked").val();
         if(type=="img"){
@@ -153,7 +165,7 @@
         }
     });
 
-    var count = 1;
+
     function change_img(obj) {
         var sequence=jQuery(obj).attr("id").substring(10);
         var path=jQuery(obj).val();
@@ -184,8 +196,15 @@
     }
 
     function remove_goods_spec_property(obj,id){
-        jQuery(obj).remove();
-        count--;
+        $.post('${basePath}/goods/specification/deleteProperty?id='+id,null,function(data){
+            if(data.code == 1){
+                jQuery(obj).remove();
+                count--;
+            }else{
+                alert(data.message);
+            }
+        });
+
     }
 
     function saveForm() {
@@ -221,7 +240,6 @@
             }
         });
     }
-
 </script>
 </body>
 </html>

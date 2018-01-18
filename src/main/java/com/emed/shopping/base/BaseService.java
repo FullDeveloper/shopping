@@ -74,6 +74,8 @@ public interface BaseService<T> {
      */
     int updateByPrimaryKey(T record);
 
+    int updateByExample(T record,Object o);
+
     /**
      *根据主键进行更新
      *只会更新不是null的数据
@@ -81,6 +83,7 @@ public interface BaseService<T> {
      */
     int updateByPrimaryKeySelective(T record);
 
+    int updateByExampleSelective(T record, Object o);
 
     /**
      * 保存或者更新，根据传入id主键是不是null来确认

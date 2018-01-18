@@ -2,8 +2,11 @@ package com.emed.shopping.dao.model.admin.goods;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ShopGoodsSpecification implements Serializable {
     @Id
@@ -44,6 +47,9 @@ public class ShopGoodsSpecification implements Serializable {
      * @mbg.generated
      */
     private String deleteStatus;
+
+    @Transient
+    private List<ShopGoodsSpecProperty> specPropertyList = new ArrayList<>();
 
     private static final long serialVersionUID = 1L;
 
@@ -93,6 +99,18 @@ public class ShopGoodsSpecification implements Serializable {
 
     public void setDeleteStatus(String deleteStatus) {
         this.deleteStatus = deleteStatus;
+    }
+
+    public List<ShopGoodsSpecProperty> getSpecPropertyList() {
+        return specPropertyList;
+    }
+
+    public void setSpecPropertyList(List<ShopGoodsSpecProperty> specPropertyList) {
+        this.specPropertyList = specPropertyList;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     @Override

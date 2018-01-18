@@ -86,6 +86,16 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
+    public int updateByExample(T record, Object o) {
+        return mapper.updateByExample(record,o);
+    }
+
+    @Override
+    public int updateByExampleSelective(T record, Object o) {
+        return mapper.updateByExampleSelective(record,o);
+    }
+
+    @Override
     public int updateByPrimaryKeySelective(T record) {
         return mapper.updateByPrimaryKeySelective(record);
     }

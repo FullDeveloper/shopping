@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.emed.shopping.dao.mapper.admin.goods.ShopGoodsSpecificationMapper" >
+
+    <resultMap id="BaseResultMap" type="com.emed.shopping.dao.model.admin.goods.ShopGoodsSpecification" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <collection property="specPropertyList" ofType="com.emed.shopping.dao.model.admin.goods.ShopGoodsSpecProperty" column="specification_id">
+            <id column="propertyId" property="id"/>
+            <result column="value" property="value" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+
+    <select id="selectSpecificationAndPropertyList" resultMap="BaseResultMap" parameterType="map">
+          SELECT
+              sp.name,
+              sp.sort,
+              sp.id,
+              sp.type,
+              py.`value` ,
+              py.id AS propertyId
+            FROM
+              (SELECT
+                sp.*
+              FROM
+                shop_goods_specification sp where sp.delete_status = 0
+              LIMIT #{offset}, #{limit}) sp
+              LEFT JOIN shop_goods_spec_property py
+                ON sp.id = py.`specification_id`
+           ORDER BY sp.${order} ,py.sort ASC
+    </select>
+
+</mapper>

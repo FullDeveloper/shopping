@@ -1,10 +1,14 @@
 package com.emed.shopping.dao.model.admin.goods;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class ShopGoods implements Serializable {
+    @Id
+    @GeneratedValue(generator = "JDBC")
     private Long id;
 
     /**

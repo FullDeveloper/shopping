@@ -13,18 +13,18 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: 周润斌
@@ -58,17 +58,36 @@ public class GoodsSpecificationController {
             @RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
             @RequestParam(required = false, value = "sort") String sort,
             @RequestParam(required = false, value = "order") String order) {
-        PageInfo<ShopGoodsSpecification> pageInfo = goodsSpecificationService.selectPage(offset, limit, new ShopGoodsSpecification(), sort + " " + order);
+        Map map = new HashMap();
+        map.put("offset",offset);
+        map.put("limit",limit);
+        map.put("order",sort + " " + order);
+        List<ShopGoodsSpecification> goodsSpecifications = goodsSpecificationService.selectSpecificationAndPropertyList(map);
+        int total = goodsSpecificationService.selectCount(new ShopGoodsSpecification());
         Map<String, Object> result = new HashMap<>(2);
-        result.put("rows", pageInfo.getList());
-        result.put("total", pageInfo.getTotal());
+        result.put("rows", goodsSpecifications);
+        result.put("total", total);
         return result;
     }
 
     @RequestMapping(value = "/addPage")
     public String addPage(){
-
         return "/admin/goods/specification/add";
+    }
+
+    @RequestMapping(value = "/updatePage")
+    public String updatePage(Long id,Model model){
+        //查询出规格基本值
+        ShopGoodsSpecification specification = goodsSpecificationService.selectByPrimaryKey(id);
+        //查询出规格下所有的属性值
+        ShopGoodsSpecProperty property = new ShopGoodsSpecProperty();
+        property.setSpecificationId(id);
+        List<ShopGoodsSpecProperty> properties = goodsSpecPropertyService.select(property,"sort asc");
+        //放入model中
+        model.addAttribute("specification",specification);
+        model.addAttribute("properties",properties);
+        model.addAttribute("update","true");
+        return "/admin/goods/specification/update";
     }
 
     @RequestMapping(value = "/save",method = RequestMethod.POST)
@@ -79,13 +98,66 @@ public class GoodsSpecificationController {
         goodsSpecificationService.save(specification);
         //处理规格属性
         genericProperty(request,specification.getId(),count);
-
         return new BaseResult(1,"成功",null);
+    }
+
+    @RequestMapping(value = "/deleteSpecification" ,method = RequestMethod.POST)
+    @ResponseBody
+    public Object deleteSpecification(Long id) {
+        //找到这个记录
+        ShopGoodsSpecification specification = goodsSpecificationService.selectByPrimaryKey(id);
+        if(specification != null){
+            //设置为已删除
+            specification.setDeleteStatus("1");
+            goodsSpecificationService.updateByPrimaryKey(specification);
+            //找到对应的属性
+            ShopGoodsSpecProperty property = new ShopGoodsSpecProperty();
+            property.setSpecificationId(id);
+            List<ShopGoodsSpecProperty> properties = goodsSpecPropertyService.select(property);
+            List<Long> accessoryIds = new ArrayList<>();
+            for(int i=0;i<properties.size() ; i++){
+               if(properties.get(i).getSpecificationImageId()!=null){
+                   accessoryIds.add(properties.get(i).getSpecificationImageId());
+               }
+            }
+            //更新为已删除状态
+            property.setDeleteStatus("1");
+            Example example = new Example(ShopGoodsSpecProperty.class) ;
+            Example.Criteria criteria = example.createCriteria();
+            criteria.andEqualTo("specificationId",specification.getId());
+            goodsSpecPropertyService.updateByExampleSelective(property,example);
+            //删除图片
+            if(accessoryIds.size()>0){
+                Example accessory = new Example(ShopAccessory.class);
+                accessory.createCriteria().andIn("id",accessoryIds);
+                ShopAccessory accessoryObj = new ShopAccessory();
+                accessoryObj.setDeleteStatus("1");
+                accessoryService.updateByExampleSelective(accessoryObj,accessory);
+            }
+            return new BaseResult(1,"删除成功",null);
+        }
+        return new BaseResult(1,"删除失败",null);
+    }
+
+    @RequestMapping(value = "/deleteProperty",method = RequestMethod.POST)
+    @ResponseBody
+    public Object deleteProperty(Long id){
+        ShopGoodsSpecProperty property = goodsSpecPropertyService.selectByPrimaryKey(id);
+        if(property != null){
+            //删除图片
+            if(property.getSpecificationImageId() != null){
+                accessoryService.deleteByPrimaryKey(property.getSpecificationImageId());
+            }
+            //删除属性
+            goodsSpecPropertyService.deleteByPrimaryKey(id);
+            return new BaseResult(1,"删除成功",null);
+        }
+        return new BaseResult(1,"删除失败,数据库中找不到Id为"+id+"对应的规格属性!",null);
     }
 
     private void genericProperty(HttpServletRequest request,Long id,Integer count){
         for(int i=1;count != null && i<=count;i++){
-                Integer sequence = Integer.parseInt(request.getParameter("sequence_"+i));
+            Integer sequence = Integer.parseInt(request.getParameter("sequence_"+i));
             String value = CommonUtil.nullToString(request.getParameter("value_"+i));
             if(StringUtils.isEmpty(sequence) || StringUtils.isEmpty(value)){
                 continue;

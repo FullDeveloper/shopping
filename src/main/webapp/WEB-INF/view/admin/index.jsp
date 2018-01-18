@@ -148,7 +148,7 @@
             <li class="sub-menu system_menus system_1">
                 <a class="waves-effect" href="javascript:;"><i class=""></i>商品信息管理</a>
                 <ul>
-                    <li><a class="waves-effect" href="javascript:Tab.addTab('', '');">商品管理</a></li>
+                    <li><a class="waves-effect" href="javascript:Tab.addTab('商品管理', '/goods/goods/index');">商品管理</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('分类管理', '/goods/class/index');">分类管理</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('品牌管理', '/goods/brand/index');">品牌管理</a></li>
                     <li><a class="waves-effect" href="javascript:Tab.addTab('类型管理', '/goods/type/index');">类型管理</a></li>
