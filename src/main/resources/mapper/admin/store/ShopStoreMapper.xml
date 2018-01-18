@@ -2,13 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.emed.shopping.dao.mapper.admin.store.ShopStoreMapper" >
 
-
     <select id="getAllStoreList" resultType="map">
     SELECT
+      ss.id,
       ss.store_name  AS storeName,
       ss.store_ower  AS storeOwer,
+      ss.validity   AS validity,
+      ss.store_status AS storeStatus,
+      ss.store_recommend AS storeRecommend,
+      ssc.class_name AS className,
       su.user_name   AS userName,
       sa.area_name   AS areaName,
+      ssg.grade_name AS gradeName,
       (SELECT
          area_name
        FROM shop_area
@@ -21,6 +26,8 @@
         ON ss.id = su.store_id
       LEFT JOIN shop_store_class ssc
     ON ss.sc_id = ssc.id
+    LEFT JOIN shop_store_grade ssg
+    ON ss.grade_id = ssg.id
 
     </select>
 
