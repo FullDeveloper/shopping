@@ -229,6 +229,7 @@
 <script>var BASE_PATH = '${basePath}';</script>
 <script src="${basePath}/resources/common/plugins/jquery.1.12.4.min.js"></script>
 <script src="${basePath}/resources/common/plugins/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+<script src="${basePath}/resources/common/plugins/bootstrap-3.3.0/js/bootstrap-switch.js"></script>
 <script src="${basePath}/resources/common/plugins/waves-0.7.5/waves.min.js"></script>
 <script src="${basePath}/resources/common/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 <script src="${basePath}/resources/common/plugins/BootstrapMenu.min.js"></script>
