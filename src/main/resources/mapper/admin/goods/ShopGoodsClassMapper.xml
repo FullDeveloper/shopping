@@ -6,7 +6,7 @@
 
     <select id="selectGoodsClassList" resultType="com.emed.shopping.base.TreeResult">
 
-        select id,class_name as text ,parent_id as parentId,level from shop_goods_class
+        select id,class_name as text ,parent_id as parentId,level from shop_goods_class where delete_status = 0
 
     </select>
 
@@ -23,6 +23,7 @@
           LEFT JOIN shop_goods_type st
             ON sc.`goods_type_id` = st.id
             <where>
+                and sc.delete_status = 0
                 <if test="parentId != null">
                     and sc.parent_id = #{parentId}
                 </if>

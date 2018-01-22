@@ -105,7 +105,7 @@
             toolbar: '#toolbar',
             columns: [
                 {field: 'ck', checkbox: true},
-                {field: 'sort', title: '排序', sortable: true, align: 'left'},
+                {field: 'sort', title: '排序', sortable: true, align: 'center',width:"80px"},
                 {field: 'className', title: '分类名称',align: 'left'},
                 {field: 'name', title: '类型',align: 'left'},
                 {field: 'display', title: '显示',align: 'center',formatter: 'displayFormatter'},
@@ -206,7 +206,10 @@
                                     buttons: {
                                         confirm: {
                                             text: '确认',
-                                            btnClass: 'waves-effect waves-button waves-light'
+                                            btnClass: 'waves-effect waves-button waves-light',
+                                            action: function(){
+                                                window.location.reload();
+                                            }
                                         }
                                     }
                                 });
