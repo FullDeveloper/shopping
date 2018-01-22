@@ -91,7 +91,9 @@
 <body style="overflow: auto">
 <div class="panel panel-widget forms-panel">
     <form id="saveForm">
-    <div class="forms">
+        <input type="hidden" id="id" name="id" class="form-control" value="${goods.id}" />
+
+        <div class="forms">
         <div class="form-grids widget-shadow" data-example-id="basic-forms">
             <div class="form-title">
                 <h4>商品分类</h4>
@@ -104,16 +106,16 @@
                     <div>
                         <div class="form-group col-lg-3 col-sm-3">
                             <label for="pid">上级分类</label>
-                            <input type="text" id="pid" name="pid" class="form-control" value="${typeName}"  onclick="$('#treeview').show()" placeholder="分类名称" />
-                            <input type="hidden" id="parentId" name="parentId" class="form-control" value="" />
-                            <input type="hidden" id="level" name="level" class="form-control" value="${goods.parentId}" />
+                            <input type="text" id="pid" name="pid" class="form-control" value="${goods.parentName}"  onclick="$('#treeview').show()" placeholder="分类名称" />
+                            <input type="hidden" id="parentId" name="parentId" class="form-control" value="${goods.parentId}" />
+                            <input type="hidden" id="level" name="level" class="form-control" value="${goods.parentLevel}" />
                             <div id="treeview" style="display: none;"></div>
                         </div>
                     </div>
                     <div>
                         <div class="form-group col-lg-3 col-sm-3">
                             <label for="type">类型</label>
-                            <input type="text" id="type" name="type" class="form-control" value="" onclick="$('#treeview2').show()" placeholder="关联类型到下级">
+                            <input type="text" id="type" name="type" class="form-control" value="${goods.name}" onclick="$('#treeview2').show()" placeholder="关联类型到下级">
                             <div id="treeview2" style="display: none;"></div>
                             <input type="hidden" id="goodsTypeId" name="goodsTypeId" value="${goods.goodsTypeId}"/>
 
@@ -126,18 +128,18 @@
                     </div>
                     <div class="form-group col-lg-3 col-sm-3 column">
                         <label for="recommend">推荐</label>
-                        <input class="push" id="recommend" checked type="checkbox"/>
-                        <input id="recommend_value" name="recommend" type="hidden" value="1"/>
+                        <input class="push" id="recommend"  <c:if test="${goods.recommend==1}">checked</c:if> type="checkbox"/>
+                        <input id="recommend_value" name="recommend" type="hidden" value="${goods.recommend}"/>
                     </div>
                     <div class="form-group col-lg-3 col-sm-3 column">
                         <label>图标</label>
                         <div>
                             <div class="radio radio-inline radio-success">
-                                <input id="locked_0" type="radio" name="iconType" value="0" checked onclick="changeImg('0')">
+                                <input id="locked_0" type="radio" name="iconType" value="0" <c:if test="${goods.iconType==0}">checked</c:if>  onclick="changeImg('0')">
                                 <label for="locked_0">系统上传</label>
                             </div>
                             <div class="radio radio-inline radio-info">
-                                <input id="sex_1" type="radio" name="iconType" value="1" onclick="changeImg('1')">
+                                <input id="sex_1" type="radio" name="iconType" <c:if test="${goods.iconType==1}">checked</c:if>  value="1" onclick="changeImg('1')">
                                 <label for="sex_1">图片上传 </label>
                             </div>
                         </div>
@@ -186,19 +188,19 @@
                         <a href="javascript:void(0);" icon="38"><img src="${basePath}/resources/style/common/images/icon/icon_38.png" /></a>
                         <a href="javascript:void(0);" icon="39"><img src="${basePath}/resources/style/common/images/icon/icon_39.png" /></a>
                         <a href="javascript:void(0);" icon="40"><img src="${basePath}/resources/style/common/images/icon/icon_40.png" /></a>
-                        <input type="hidden" id="iconSys" name="iconSys" value="0"/>
+                        <input type="hidden" id="iconSys" name="iconSys" value="${goods.iconSys}"/>
                     </div>
                     <div class="form-group col-lg-3 col-sm-3" >
                         <label for="sort">排序</label>
-                        <input type="text" class="form-control" id="sort" name="sort" placeholder="排序">
+                        <input type="text" class="form-control" id="sort" value="${goods.sort}" name="sort" placeholder="排序" />
                     </div>
                     <div class="form-group col-lg-3 col-sm-3" >
                         <label for="seoKeyWords">SEO关键字</label>
-                        <textarea class="form-control" id="seoKeyWords" name="seoKeywords"></textarea>
+                        <textarea class="form-control" id="seoKeyWords" name="seoKeywords" >${goods.seoKeywords}</textarea>
                     </div>
                     <div class="form-group col-lg-3 col-sm-3" >
                         <label for="seoDescription">SEO描述</label>
-                        <textarea class="form-control" id="seoDescription" name="seoDescription"></textarea>
+                        <textarea class="form-control" id="seoDescription" name="seoDescription">${goods.seoDescription}</textarea>
                     </div>
                     <div class="form-group col-lg-3 col-sm-3" >
                         <a href="javascript:" class="btn btn-success" onclick="saveForm()">保存</a>
@@ -259,6 +261,11 @@
     }
 
     $(function(){
+        var icon = ${goods.iconSys};
+        $("[icon]").removeClass("this");
+        $("[icon='"+icon+"']").addClass('this');
+
+
         $("#pid").click(function() {
             var options = {
                 bootstrap2 : false,
@@ -330,6 +337,10 @@
         });
     });
 
+    function noneTree() {
+        $("#treeview2").hide();
+        $("#treeview").hide();
+    }
 
 </script>
 </body>

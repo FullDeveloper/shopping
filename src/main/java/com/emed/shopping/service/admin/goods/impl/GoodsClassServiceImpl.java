@@ -62,6 +62,11 @@ public class GoodsClassServiceImpl extends BaseServiceImpl<ShopGoodsClass> imple
         return goodsClassMapper.selectGoodsClassJoinList(map);
     }
 
+    @Override
+    public Map selectFllDataById(Long id) {
+        return goodsClassMapper.selectFllDataById(id);
+    }
+
     public List<TreeResult> eachGoodsClassList(List<TreeResult> parentList,List<TreeResult> classList){
         //遍历父菜单下面所有的子菜单
         for(int i=0;i<parentList.size();i++){

@@ -31,4 +31,29 @@
         limit #{offset},#{limit}
     </select>
 
+    <select id="selectFllDataById" parameterType="long" resultType="map">
+        SELECT
+          s.class_name AS className,
+          s.parent_id AS parentId,
+          s.goods_type_id AS goodsTypeId,
+          s.display,
+          s.recommend,
+          s.icon_type AS iconType,
+          s.icon_sys AS iconSys,
+          s.seo_keywords AS seoKeywords,
+          s.seo_description AS seoDescription,
+          s.id,
+          s.sort,
+          t.name,
+          s2.class_name AS parentName,
+          s2.level as parentLevel
+        FROM
+          shop_goods_class s
+          LEFT JOIN shop_goods_type t
+            ON s.goods_type_id = t.id
+          LEFT JOIN shop_goods_class s2
+            ON s.parent_id = s2.id
+            where s.id = #{id}
+    </select>
+
 </mapper>

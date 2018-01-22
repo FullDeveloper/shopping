@@ -25,4 +25,5 @@ public interface GoodsClassService extends BaseService<ShopGoodsClass> {
 
     List<Map> selectGoodsClassJoinList(Map map);
 
+    Map selectFllDataById(Long id);
 }

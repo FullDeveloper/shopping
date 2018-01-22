@@ -18,4 +18,5 @@ public interface ShopGoodsClassMapper extends CommonMapper<ShopGoodsClass> {
 
     List<Map> selectGoodsClassJoinList(Map map);
 
+    Map selectFllDataById(Long id);
 }

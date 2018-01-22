@@ -10,15 +10,13 @@ import com.emed.shopping.service.admin.goods.GoodsClassService;
 import com.emed.shopping.service.admin.goods.GoodsTypeService;
 import com.emed.shopping.util.CommonUtil;
 import com.github.pagehelper.PageInfo;
+import com.sun.xml.internal.rngom.parse.host.Base;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.HashMap;
@@ -56,10 +54,12 @@ public class GoodsClassController {
             @RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
             @RequestParam(required = false, value = "sort") String sort,
             @RequestParam(required = false, value = "order") String order,
-            ShopGoodsClass goodsClass) {
+            Long parentId) {
         Map map = new HashMap<>();
-        if(goodsClass != null && goodsClass.getParentId()!=null){
-            map.put("parentId",goodsClass.getParentId());
+        ShopGoodsClass goodsClass = new ShopGoodsClass();
+        if(parentId != null){
+            map.put("parentId",parentId);
+            goodsClass.setParentId(parentId);
         }
         map.put("order",sort + " " + order);
         map.put("offset",offset);
@@ -87,35 +87,57 @@ public class GoodsClassController {
         String retUrl = "/admin/goods/class/add";
         if(flag != null){
             retUrl = "/admin/goods/class/update";
-            ShopGoodsClass goodsClass  = goodsClassService.selectByPrimaryKey(id);
+            Map goodsClass  = goodsClassService.selectFllDataById(id);
             model.addAttribute("goods",goodsClass);
-            if(goodsClass.getParentId()!=null){
-                ShopGoodsClass parent = goodsClassService.selectByPrimaryKey(goodsClass.getParentId());
-                model.addAttribute("typeName",parent.getClassName());
-            }
         }
         return retUrl;
     }
 
-    @RequestMapping(value = "/save")
+    @RequestMapping(value = "/save",method = RequestMethod.POST)
     @ResponseBody
     public Object save(ShopGoodsClass goodsClass){
-        goodsClass.setLevel(goodsClass.getLevel()+1);
+        goodsClass.setLevel(goodsClass.getLevel()==null?0: goodsClass.getLevel()+1);
         goodsClassService.save(goodsClass);
-        return new BaseResult(1,"添加成功",null);
+        return new BaseResult(1,"操作成功",null);
     }
 
-    @RequestMapping(value = "/changeStatus")
+    @RequestMapping(value = "/changeStatus",method = RequestMethod.POST)
     @ResponseBody
     public Object changeRecommend(ShopGoodsClass goodsClass){
         int i = goodsClassService.updateByPrimaryKeySelective(goodsClass);
         return BaseResult.ok("操作成功",i);
     }
 
-    @InitBinder
+    @RequestMapping(value = "/deleteGoodsClass",method = RequestMethod.POST)
+    @ResponseBody
+    public Object deleteGoodsClass(Long id){
+        //1.找到该类型
+        ShopGoodsClass goodsClass = goodsClassService.selectByPrimaryKey(id);
+        //2.找到该类型下的子类并删除
+        cascadeDelete(goodsClass.getId());
+        //3.删除自己
+        goodsClass.setDeleteStatus("1");
+        goodsClassService.updateByPrimaryKey(goodsClass);
+        return BaseResult.ok("操作成功",null);
+    }
+
+    public void cascadeDelete(Long parentId){
+        ShopGoodsClass query = new ShopGoodsClass();
+        query.setParentId(parentId);
+        List<ShopGoodsClass> subList = goodsClassService.select(query);
+        if(subList != null){
+            for(ShopGoodsClass shopGoodsClass: subList){
+                cascadeDelete(shopGoodsClass.getId());
+                shopGoodsClass.setDeleteStatus("1");
+                goodsClassService.updateByPrimaryKey(shopGoodsClass);
+            }
+        }
+    }
+
+  /*  @InitBinder
     public void initBinder(WebDataBinder webDataBinder){
         webDataBinder.setDisallowedFields("createTime");
         webDataBinder.setDisallowedFields("sort");
-    }
+    }*/
 
 }
