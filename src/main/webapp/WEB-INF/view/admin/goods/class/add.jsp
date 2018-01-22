@@ -25,6 +25,7 @@
     <link href="${basePath}/resources/common/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet"/>
     <link href="${basePath}/resources/common/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet"/>
     <link href="${basePath}/resources/common/css/admin.css" rel="stylesheet"/>
+    <link href="${basePath}/resources/common/plugins/jquery-confirm/jquery-confirm.min.css" rel="stylesheet"/>
 
     <style>
 
@@ -89,6 +90,7 @@
 </head>
 <body style="overflow: auto">
 <div class="panel panel-widget forms-panel">
+    <form id="saveForm">
     <div class="forms">
         <div class="form-grids widget-shadow" data-example-id="basic-forms">
             <div class="form-title">
@@ -97,41 +99,45 @@
             <div class="form-body column">
                     <div class="form-group col-lg-3 col-sm-3" >
                         <label for="name">分类名称</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="分类名称">
+                        <input type="text" class="form-control" id="name" name="className" placeholder="分类名称" />
                     </div>
                     <div>
                         <div class="form-group col-lg-3 col-sm-3">
                             <label for="pid">上级分类</label>
-                            <input type="text" id="pid" name="pid" class="form-control" value=""
-                                   onclick="$('#treeview').show()" placeholder="分类名称">
+                            <input type="text" id="pid" name="pid" class="form-control" value="" onclick="$('#treeview').show()" placeholder="分类名称" />
+                            <input type="hidden" id="parentId" name="parentId" class="form-control" value="" />
+                            <input type="hidden" id="level" name="level" class="form-control" value="" />
                             <div id="treeview" style="display: none;"></div>
                         </div>
                     </div>
                     <div>
                         <div class="form-group col-lg-3 col-sm-3">
                             <label for="type">类型</label>
-                            <input type="text" id="type" name="type" class="form-control" value=""
-                                   onclick="$('#treeview2').show()" placeholder="关联类型到下级">
+                            <input type="text" id="type" name="type" class="form-control" value="" onclick="$('#treeview2').show()" placeholder="关联类型到下级">
                             <div id="treeview2" style="display: none;"></div>
+                            <input type="hidden" id="goodsTypeId" name="goodsTypeId" />
+
                         </div>
                     </div>
                     <div class="form-group col-lg-3 col-sm-3 column">
                         <label for="display">显示</label>
                         <input class="push" id="display" checked type="checkbox"/>
+                        <input id="display_value" name="display" type="hidden" value="1"/>
                     </div>
                     <div class="form-group col-lg-3 col-sm-3 column">
                         <label for="recommend">推荐</label>
-                        <input class="push" id="recommend" name="recommend" checked type="checkbox"/>
+                        <input class="push" id="recommend" checked type="checkbox"/>
+                        <input id="recommend_value" name="recommend" type="hidden" value="1"/>
                     </div>
                     <div class="form-group col-lg-3 col-sm-3 column">
                         <label>图标</label>
                         <div>
                             <div class="radio radio-inline radio-success">
-                                <input id="locked_0" type="radio" name="upload" value="0" checked onclick="changeImg('0')">
+                                <input id="locked_0" type="radio" name="iconType" value="0" checked onclick="changeImg('0')">
                                 <label for="locked_0">系统上传</label>
                             </div>
                             <div class="radio radio-inline radio-info">
-                                <input id="sex_1" type="radio" name="upload" value="1" onclick="changeImg('1')">
+                                <input id="sex_1" type="radio" name="iconType" value="1" onclick="changeImg('1')">
                                 <label for="sex_1">图片上传 </label>
                             </div>
                         </div>
@@ -188,59 +194,29 @@
                     </div>
                     <div class="form-group col-lg-3 col-sm-3" >
                         <label for="seoKeyWords">SEO关键字</label>
-                        <textarea class="form-control" id="seoKeyWords"></textarea>
+                        <textarea class="form-control" id="seoKeyWords" name="seoKeywords"></textarea>
                     </div>
                     <div class="form-group col-lg-3 col-sm-3" >
                         <label for="seoDescription">SEO描述</label>
-                        <textarea class="form-control" id="seoDescription"></textarea>
+                        <textarea class="form-control" id="seoDescription" name="seoDescription"></textarea>
                     </div>
                     <div class="form-group col-lg-3 col-sm-3" >
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <a href="javascript:" class="btn btn-success" onclick="saveForm()">保存</a>
                     </div>
                 </div>
 
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
 <script src="${basePath}/resources/common/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <script src="${basePath}/resources/common/plugins/bootstrap-treeview/js/bootstrap-treeview.js"></script>
+<script src="${basePath}/resources/common/plugins/jquery-confirm/jquery-confirm.min.js"></script>
+
 <script>
-    var tree = [
-        {
-            id: 1,
-            text: "Parent 1",
-            nodes: [
-                {
-                    text: "Child 1",
-                    nodes: [
-                        {
-                            text: "Grandchild 1"
-                        },
-                        {
-                            text: "Grandchild 2"
-                        }
-                    ]
-                },
-                {
-                    text: "Child 2"
-                }
-            ]
-        },
-        {
-            text: "Parent 2"
-        },
-        {
-            text: "Parent 3"
-        },
-        {
-            text: "Parent 4"
-        },
-        {
-            text: "Parent 5"
-        }
-    ];
+    var tree = ${jsonStr};
+    var treeType = ${typeStr};
 
     function changeImg(type){
         if(type == "0"){
@@ -252,54 +228,109 @@
         }
     }
 
-    $("#pid").click(function() {
-        var options = {
-            bootstrap2 : false,
-            showTags : true,
-            levels : 5,
-            showCheckbox : true,
-            checkedIcon : "glyphicon glyphicon-check",
-            data : tree,
-            onNodeSelected : function(event, data) {
-                $("#pid").val(data.text);
-                $("#treeview").hide();
+    function saveForm(){
+        $.ajax({
+            url:"${pageContext.request.contextPath}/goods/class/save",
+            type:"post",
+            data:$("#saveForm").serialize(),
+            success:function(data){
+                if(data.code == 1){
+                    $.confirm({
+                        theme: 'dark',
+                        animation: 'rotateX',
+                        closeAnimation: 'rotateX',
+                        title: false,
+                        content: data.message,
+                        buttons: {
+                            confirm: {
+                                text: '确认',
+                                btnClass: 'waves-effect waves-button waves-light',
+                                action: function (){
+                                    window.location.href = "${basePath}/goods/class/index";
+                                }
+                            }
+                        }
+                    });
+                }
+            },
+            error:function(e){
             }
-        };
-        $('#treeview').treeview(options);
+        });
+    }
+
+    $(function(){
+        $("#pid").click(function() {
+            var options = {
+                bootstrap2 : false,
+                showTags : true,
+                levels : 1,
+                showCheckbox : true,
+                checkedIcon : "glyphicon glyphicon-check",
+                data : tree,
+                onNodeSelected : function(event, data) {
+                    $("#pid").val(data.text);
+                    $("#treeview").hide();
+                    $("#parentId").val(data.id);
+                    $("#level").val(data.level);
+                }
+            };
+            $('#treeview').treeview(options);
+        });
+        $("#type").click(function() {
+            var options = {
+                bootstrap2 : false,
+                showTags : true,
+                levels : 1,
+                showCheckbox : true,
+                checkedIcon : "glyphicon glyphicon-check",
+                data : treeType,
+                onNodeSelected : function(event, data) {
+                    $("#type").val(data.text);
+                    $("#treeview2").hide();
+                    $("#goodTypeId").val(data.id);
+                }
+            };
+            $('#treeview2').treeview(options);
+        });
+
+
+        $(".icon_sys a").on('click',function(){
+            $(this).parent().find("a").removeClass("this");
+            $(this).addClass("this");
+            $("#iconSys").val($(this).attr('icon'));
+        });
+
+        $("#display").bootstrapSwitch({
+            onText:'显示',
+            offText:'隐藏',
+            onColor : "success",
+            offColor : "danger",
+            size : "small",
+            onSwitchChange : function(event, state) {
+                if(state){
+                    $("#display_value").val("1");
+                }else{
+                    $("#display_value").val("0");
+                }
+            }
+        });
+        $("#recommend").bootstrapSwitch({
+            onText:'推荐',
+            offText:'不推荐',
+            onColor : "success",
+            offColor : "danger",
+            size : "small",
+            onSwitchChange : function(event, state) {
+                if(state){
+                    $("#recommend_value").val("1");
+                }else{
+                    $("#recommend_value").val("0");
+                }
+            }
+        });
     });
 
-    $(".icon_sys a").on('click',function(){
-        $(this).parent().find("a").removeClass("this");
-        $(this).addClass("this");
-        $("#iconSys").val($(this).attr('icon'));
-    });
 
-    $("#display").bootstrapSwitch({
-        onText:'显示',
-        offText:'隐藏',
-        onColor : "success",
-        offColor : "danger",
-        size : "small",
-        onSwitchChange : function(event, state) {
-            //后台修改状态代码
-            $.post('${basePath}/store/manager/changeRecommend?id='+event.target.id+'&flag='+state,null,function(data){
-                console.log(data)
-            });
-        }
-    });
-    $("#recommend").bootstrapSwitch({
-        onText:'推荐',
-        offText:'不推荐',
-        onColor : "success",
-        offColor : "danger",
-        size : "small",
-        onSwitchChange : function(event, state) {
-            //后台修改状态代码
-            $.post('${basePath}/store/manager/changeRecommend?id='+event.target.id+'&flag='+state,null,function(data){
-                console.log(data)
-            });
-        }
-    });
 </script>
 </body>
 </html>

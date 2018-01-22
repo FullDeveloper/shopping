@@ -17,4 +17,5 @@
 <link href="${basePath}/resources/common/plugins/select2/theme/select2-bootstrap.min.css" rel="stylesheet"/>
 <link href="${basePath}/resources/common/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet"/>
 <link href="${basePath}/resources/common/plugins/webuploader-0.1.5/webuploader.css" rel="stylesheet"/>
+<link href="${basePath}/resources/common/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet"/>
 <link href="${basePath}/resources/common/css/common.css" rel="stylesheet"/>

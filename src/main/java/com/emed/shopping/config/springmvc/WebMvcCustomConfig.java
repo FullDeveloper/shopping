@@ -5,6 +5,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc //开启Spring MVC支持，若无此句，重写WebMvcConfigurerAdapter方法无效
 @ComponentScan("**.*controller")
 public class WebMvcCustomConfig extends WebMvcConfigurerAdapter {
+
 
 
     @Bean

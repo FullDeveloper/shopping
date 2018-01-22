@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.emed.shopping.dao.mapper.admin.goods.ShopGoodsClassMapper" >
+
+
+
+    <select id="selectGoodsClassList" resultType="com.emed.shopping.base.TreeResult">
+
+        select id,class_name as text ,parent_id as parentId,level from shop_goods_class
+
+    </select>
+
+    <select id="selectGoodsClassJoinList" resultType="map" parameterType="map">
+        SELECT
+          sc.id,
+          sc.class_name as className,
+          sc.display,
+          sc.recommend,
+          sc.sort ,
+          st.`name`
+        FROM
+          shop_goods_class sc
+          LEFT JOIN shop_goods_type st
+            ON sc.`goods_type_id` = st.id
+            <where>
+                <if test="parentId != null">
+                    and sc.parent_id = #{parentId}
+                </if>
+            </where>
+        order by sc.${order}
+        limit #{offset},#{limit}
+    </select>
+
+</mapper>

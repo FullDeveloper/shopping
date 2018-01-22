@@ -1,9 +1,14 @@
 package com.emed.shopping.dao.model.admin.goods;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ShopGoodsClass implements Serializable {
     @Id
@@ -85,6 +90,7 @@ public class ShopGoodsClass implements Serializable {
      *
      * @mbg.generated
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
 
     /**
@@ -108,7 +114,18 @@ public class ShopGoodsClass implements Serializable {
      */
     private String seoDescription;
 
+    @Transient
+    private List<ShopGoodsClass> nodes = new ArrayList<>();
+
     private static final long serialVersionUID = 1L;
+
+    public List<ShopGoodsClass> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<ShopGoodsClass> nodes) {
+        this.nodes = nodes;
+    }
 
     public Long getId() {
         return id;

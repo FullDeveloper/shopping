@@ -1,7 +1,10 @@
 package com.emed.shopping.service.admin.goods;
 
 import com.emed.shopping.base.BaseService;
+import com.emed.shopping.base.TreeResult;
 import com.emed.shopping.dao.model.admin.goods.ShopGoodsType;
+
+import java.util.List;
 
 /**
  * @Author: 周润斌
@@ -9,4 +12,6 @@ import com.emed.shopping.dao.model.admin.goods.ShopGoodsType;
  * @Description:
  */
 public interface GoodsTypeService extends BaseService<ShopGoodsType>{
+
+
 }

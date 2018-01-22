@@ -1,7 +1,11 @@
 package com.emed.shopping.dao.mapper.admin.goods;
 
+import com.emed.shopping.base.TreeResult;
 import com.emed.shopping.dao.model.admin.goods.ShopGoodsClass;
 import com.emed.shopping.util.CommonMapper;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: 周润斌
@@ -9,4 +13,9 @@ import com.emed.shopping.util.CommonMapper;
  * @Description:
  */
 public interface ShopGoodsClassMapper extends CommonMapper<ShopGoodsClass> {
+
+    List<TreeResult> selectGoodsClassList();
+
+    List<Map> selectGoodsClassJoinList(Map map);
+
 }

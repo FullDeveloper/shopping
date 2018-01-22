@@ -22,6 +22,11 @@ public class BaseResult {
      */
     public Object data;
 
+    public static BaseResult ok(String message,Object data){
+
+        return new BaseResult(1,message,data);
+    }
+
     public BaseResult(int code, String message, Object data) {
         this.code = code;
         this.message = message;

@@ -138,7 +138,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
         Example.Criteria criteria = example.createCriteria();
         dealWithExample(record, criteria);
         example.setOrderByClause(orderStr);
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.offsetPage(pageNum, pageSize);
         List<T> list = mapper.selectByExample(example);
         return new PageInfo<T>(list);
     }

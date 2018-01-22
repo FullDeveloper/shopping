@@ -1,9 +1,12 @@
 package com.emed.shopping.service.admin.goods.impl;
 
 import com.emed.shopping.base.BaseServiceImpl;
+import com.emed.shopping.base.TreeResult;
 import com.emed.shopping.dao.model.admin.goods.ShopGoodsType;
 import com.emed.shopping.service.admin.goods.GoodsTypeService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Author: 周润斌
@@ -12,7 +15,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GoodsTypeServiceImpl extends BaseServiceImpl<ShopGoodsType> implements GoodsTypeService {
-
 
 
 }
