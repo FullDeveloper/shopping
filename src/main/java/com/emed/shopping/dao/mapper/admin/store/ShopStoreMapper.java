@@ -11,4 +11,5 @@ import java.util.Map;
  */
 public interface ShopStoreMapper extends CommonMapper<ShopStore> {
     List<Map> getAllStoreList();
+    List<Map> getOneStoreById(Long id);
 }
