@@ -86,7 +86,9 @@
 <body style="overflow: auto">
 <div class="panel panel-widget forms-panel">
     <form id="saveForm">
-    <div class="forms">
+        <input type="hidden" id="id" name="id" class="form-control" value="${brand.id}" />
+        <input type="hidden" name="accessoryId" class="form-control" value="${brand.accessoryId}" />
+        <div class="forms">
         <div class="form-grids widget-shadow" data-example-id="basic-forms">
             <div class="form-title">
                 <h4>品牌管理</h4>
@@ -94,15 +96,15 @@
             <div class="form-body column">
                     <div class="form-group col-lg-3 col-sm-3" >
                         <label for="name">品牌名称</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="品牌名称" />
+                        <input type="text" class="form-control" id="name" name="name" value="${brand.brandName}" placeholder="品牌名称" />
                     </div>
                     <div class="form-group col-lg-3 col-sm-3" >
-                        <label for="name">首字母</label>
-                        <input type="text" class="form-control" id="firstWord" name="firstWord" placeholder="首字母" />
+                        <label for="firstWord">首字母</label>
+                        <input type="text" class="form-control" id="firstWord" value="${brand.firstWord}" name="firstWord" placeholder="首字母" />
                     </div>
                     <div class="form-group col-lg-3 col-sm-3" >
-                        <label for="name">类别</label>
-                        <input type="text" class="form-control" id="className" name="className" placeholder="分类名称" />
+                        <label for="className">类别</label>
+                        <input type="text" class="form-control" id="className" value="${brand.categoryName}" name="className" placeholder="分类名称" />
                     </div>
                     <div class="form-group col-lg-3 col-sm-3" >
                         <label for="name">品牌图片</label>
@@ -112,12 +114,12 @@
                     </div>
                     <div class="form-group col-lg-3 col-sm-3 column">
                         <label for="recommend">是否推荐</label>
-                        <input class="push" id="recommend" checked type="checkbox"/>
-                        <input id="recommend_value" name="recommend" type="hidden" value="1"/>
+                        <input class="push" id="recommend" <c:if test="${brand.recommend == '1'}">checked</c:if> type="checkbox"/>
+                        <input id="recommend_value" name="recommend" type="hidden" value="${brand.recommend}"/>
                     </div>
                     <div class="form-group col-lg-3 col-sm-3" >
                         <label for="sort">排序</label>
-                        <input type="text" class="form-control" id="sort" name="sort" placeholder="排序">
+                        <input type="text" class="form-control" id="sort" name="sort" value="${brand.sort}" placeholder="排序">
                     </div>
                     <div class="form-group col-lg-3 col-sm-3" >
                         <a href="javascript:" class="btn btn-success" onclick="saveForm()">保存</a>
@@ -187,6 +189,10 @@
             showCaption:true,//是否显示标题
             browseClass:"btn btn-primary", //按钮样式
             dropZoneEnabled: false,//是否显示拖拽区域
+            initialPreviewAsData: true,
+            initialPreview: [
+                "${basePath}/${brand.path}/${brand.logoName}",
+            ],
             //minImageWidth: 50, //图片的最小宽度
             //minImageHeight: 50,//图片的最小高度
             //maxImageWidth: 1000,//图片的最大宽度

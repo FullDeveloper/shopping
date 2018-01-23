@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.emed.shopping.dao.mapper.admin.goods.ShopGoodsBrandCategoryMapper" >
+
+    <resultMap id="baseResultMap" type="com.emed.shopping.dao.model.admin.goods.ShopGoodsBrandCategory">
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <collection property="goodsBrandList" ofType="com.emed.shopping.dao.model.admin.goods.ShopGoodsBrand" column="category_id">
+            <id column="brandId" property="id"/>
+            <result column="brandName" property="name" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+
+    <select id="selectBrandCategoryList" resultMap="baseResultMap">
+
+        SELECT
+          c.name,
+          b.`name` AS brandName,
+          b.id as brandId
+        FROM
+          shop_goods_brand_category c
+          LEFT JOIN shop_goods_brand b
+            ON b.`category_id` = c.id
+
+    </select>
+
+</mapper>

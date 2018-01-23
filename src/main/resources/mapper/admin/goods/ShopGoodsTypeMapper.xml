@@ -3,4 +3,5 @@
 <mapper namespace="com.emed.shopping.dao.mapper.admin.goods.ShopGoodsTypeMapper" >
 
 
+
 </mapper>

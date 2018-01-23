@@ -26,7 +26,9 @@
                 sp.*
               FROM
                 shop_goods_specification sp where sp.delete_status = 0
-              LIMIT #{offset}, #{limit}) sp
+                <if test="page != null">
+                    LIMIT #{offset}, #{limit}
+                </if>) sp
               LEFT JOIN shop_goods_spec_property py
                 ON sp.id = py.`specification_id`
            ORDER BY sp.${order} ,py.sort ASC

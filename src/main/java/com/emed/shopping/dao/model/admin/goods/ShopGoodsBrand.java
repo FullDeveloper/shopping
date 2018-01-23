@@ -39,6 +39,11 @@ public class ShopGoodsBrand implements Serializable {
     private Integer audit;
 
     /**
+     * 使用者身份
+     */
+    private Integer userStatus;
+
+    /**
      * 所属用户
      *
      * @mbg.generated
@@ -100,6 +105,14 @@ public class ShopGoodsBrand implements Serializable {
      * @mbg.generated
      */
     private String remark;
+
+    public Integer getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(Integer userStatus) {
+        this.userStatus = userStatus;
+    }
 
     private static final long serialVersionUID = 1L;
 

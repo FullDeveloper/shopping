@@ -27,7 +27,6 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public List<T> select(T record) {
-
         return mapper.select(record);
     }
 

@@ -61,6 +61,7 @@ public class GoodsSpecificationController {
         Map map = new HashMap();
         map.put("offset",offset);
         map.put("limit",limit);
+        map.put("page","page");
         map.put("order",sort + " " + order);
         List<ShopGoodsSpecification> goodsSpecifications = goodsSpecificationService.selectSpecificationAndPropertyList(map);
         int total = goodsSpecificationService.selectCount(new ShopGoodsSpecification());
