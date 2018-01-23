@@ -2,22 +2,18 @@ package com.emed.shopping.controller.admin.goods;
 
 import com.emed.shopping.base.BaseResult;
 import com.emed.shopping.base.TreeResult;
-import com.emed.shopping.dao.model.admin.goods.ShopGoods;
 import com.emed.shopping.dao.model.admin.goods.ShopGoodsClass;
 import com.emed.shopping.dao.model.admin.goods.ShopGoodsType;
-import com.emed.shopping.dao.model.admin.store.ShopStore;
 import com.emed.shopping.service.admin.goods.GoodsClassService;
 import com.emed.shopping.service.admin.goods.GoodsTypeService;
-import com.emed.shopping.util.CommonUtil;
-import com.github.pagehelper.PageInfo;
-import com.sun.xml.internal.rngom.parse.host.Base;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-import tk.mybatis.mapper.entity.Example;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;

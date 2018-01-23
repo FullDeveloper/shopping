@@ -10,6 +10,7 @@
       ss.validity   AS validity,
       ss.store_status AS storeStatus,
       ss.store_recommend AS storeRecommend,
+      ss.sc_id AS scId,
       ssc.class_name AS className,
       su.user_name   AS userName,
       sa.area_name   AS areaName,
@@ -30,5 +31,44 @@
     ON ss.grade_id = ssg.id
 
     </select>
+
+    <select id="getOneStoreById" resultType="map" parameterType="java.lang.Long">
+        SELECT
+        ss.id,
+        ss.store_address AS storeAddress,
+        ss.store_zip   AS storeZip,
+        ss.store_telephone AS storeTelephone,
+        ss.store_name  AS storeName,
+        ss.store_ower  AS storeOwer,
+        ss.card_approve AS cardApprove,
+        ss.realstore_approve AS realstoreApprove,
+        ss.sc_id AS scId,
+        DATE_FORMAT(ss.validity, '%Y-%m-%d' ) AS validity,
+        ss.store_status AS storeStatus,
+        ss.store_recommend AS storeRecommend,
+        ssc.class_name AS className,
+        su.user_name   AS userName,
+        sa.area_name   AS areaName,
+        ssg.grade_name AS gradeName,
+        (SELECT
+        area_name
+        FROM shop_area
+        WHERE id = sa.parent_id) AS parentName,
+        ssc.class_name AS className
+        FROM shop_store ss
+        LEFT JOIN shop_area sa
+        ON sa.id = ss.area_id
+        LEFT JOIN shop_user su
+        ON ss.id = su.store_id
+        LEFT JOIN shop_store_class ssc
+        ON ss.sc_id = ssc.id
+        LEFT JOIN shop_store_grade ssg
+        ON ss.grade_id = ssg.id
+        WHERE
+        ss.id = #{id}
+
+    </select>
+
+
 
 </mapper>

@@ -1,19 +1,25 @@
 package com.emed.shopping.controller.admin.store;
 
+import com.emed.shopping.base.BaseResult;
+import com.emed.shopping.dao.mapper.admin.store.ShopStoreClassMapper;
 import com.emed.shopping.dao.mapper.admin.store.ShopStoreMapper;
+import com.emed.shopping.dao.model.admin.store.ShopArea;
 import com.emed.shopping.dao.model.admin.store.ShopStore;
+import com.emed.shopping.dao.model.admin.store.ShopStoreClass;
+import com.emed.shopping.service.admin.store.ShopAreaService;
 import com.emed.shopping.service.admin.store.ShopStoreService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +34,10 @@ import java.util.Map;
 public class StoreManagerController {
     @Autowired
     private ShopStoreService shopStoreService;
+    @Autowired
+    private ShopAreaService shopAreaService;
+    @Autowired
+    private ShopStoreClassMapper shopStoreClassMapper;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(){
@@ -84,9 +94,30 @@ public class StoreManagerController {
 
     //跳转到更新店铺页面
     @RequestMapping(value = "/toEditStore")
-    public String  toEditStore(String id,Model model){
-        ShopStore shopStore = shopStoreService.selectByPrimaryKey(Long.parseLong(id));
-        model.addAttribute(shopStore);
-        return "/admin/store/manager/edit";
+    public ModelAndView toEditStore(String id){
+        List<Map> oneStoreById = shopStoreMapper.getOneStoreById(Long.parseLong(id));
+        List<ShopStoreClass> shopStoreClasses = shopStoreClassMapper.selectAll();
+
+        ModelAndView modelAndView = new ModelAndView("/admin/store/manager/update");
+        modelAndView.addObject("shopStoreClasses",shopStoreClasses);
+        modelAndView.addObject("map",oneStoreById.get(0));
+        return modelAndView;
     }
+
+    @RequestMapping(value = "/getAddress")
+    @ResponseBody
+    public List<ShopArea> getAddress(String item,String id){
+        if("province".equals(item))
+            return shopAreaService.findFullArea().get("provinceInfo");
+        else
+            return shopAreaService.getAddressByLevel(id);
+    }
+
+    @RequestMapping(value="/updateStoreInfo")
+    @ResponseBody
+    public Object updateStoreInfo(HttpServletRequest request, HttpServletResponse response){
+        BaseResult baseResult = shopStoreService.updateStoreInfo(request);
+        return baseResult;
+    }
+
 }
