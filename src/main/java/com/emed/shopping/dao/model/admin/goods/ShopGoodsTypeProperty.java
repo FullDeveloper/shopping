@@ -1,24 +1,31 @@
 package com.emed.shopping.dao.model.admin.goods;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-public class ShopGoodsSpecification implements Serializable {
-    @Id
-    @GeneratedValue(generator = "JDBC")
+public class ShopGoodsTypeProperty implements Serializable {
     private Long id;
 
     /**
-     * 规格名称
+     * 属性名称
      *
      * @mbg.generated
      */
     private String name;
+
+    /**
+     * 属性值
+     *
+     * @mbg.generated
+     */
+    private String value;
+
+    /**
+     * 是否显示
+     *
+     * @mbg.generated
+     */
+    private Integer display;
 
     /**
      * 排序
@@ -28,18 +35,11 @@ public class ShopGoodsSpecification implements Serializable {
     private Integer sort;
 
     /**
-     * 1 : 文件2:图片
+     * 所属类型编号
      *
      * @mbg.generated
      */
-    private String type;
-
-    /**
-     * 添加时间
-     *
-     * @mbg.generated
-     */
-    private Date createTime;
+    private Long goodsTypeId;
 
     /**
      * 删除状态
@@ -48,21 +48,14 @@ public class ShopGoodsSpecification implements Serializable {
      */
     private String deleteStatus;
 
-    @Transient
-    private List<ShopGoodsSpecProperty> specPropertyList = new ArrayList<>();
-
-    @Transient
-    private Boolean checked;
+    /**
+     * 添加时间
+     *
+     * @mbg.generated
+     */
+    private Date createTime;
 
     private static final long serialVersionUID = 1L;
-
-    public Boolean getChecked() {
-        return checked;
-    }
-
-    public void setChecked(Boolean checked) {
-        this.checked = checked;
-    }
 
     public Long getId() {
         return id;
@@ -80,6 +73,22 @@ public class ShopGoodsSpecification implements Serializable {
         this.name = name;
     }
 
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public Integer getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(Integer display) {
+        this.display = display;
+    }
+
     public Integer getSort() {
         return sort;
     }
@@ -88,20 +97,12 @@ public class ShopGoodsSpecification implements Serializable {
         this.sort = sort;
     }
 
-    public String getType() {
-        return type;
+    public Long getGoodsTypeId() {
+        return goodsTypeId;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setGoodsTypeId(Long goodsTypeId) {
+        this.goodsTypeId = goodsTypeId;
     }
 
     public String getDeleteStatus() {
@@ -112,16 +113,12 @@ public class ShopGoodsSpecification implements Serializable {
         this.deleteStatus = deleteStatus;
     }
 
-    public List<ShopGoodsSpecProperty> getSpecPropertyList() {
-        return specPropertyList;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setSpecPropertyList(List<ShopGoodsSpecProperty> specPropertyList) {
-        this.specPropertyList = specPropertyList;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Override
@@ -132,10 +129,12 @@ public class ShopGoodsSpecification implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", name=").append(name);
+        sb.append(", value=").append(value);
+        sb.append(", display=").append(display);
         sb.append(", sort=").append(sort);
-        sb.append(", type=").append(type);
-        sb.append(", createTime=").append(createTime);
+        sb.append(", goodsTypeId=").append(goodsTypeId);
         sb.append(", deleteStatus=").append(deleteStatus);
+        sb.append(", createTime=").append(createTime);
         sb.append("]");
         return sb.toString();
     }
@@ -151,13 +150,15 @@ public class ShopGoodsSpecification implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        ShopGoodsSpecification other = (ShopGoodsSpecification) that;
+        ShopGoodsTypeProperty other = (ShopGoodsTypeProperty) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+            && (this.getValue() == null ? other.getValue() == null : this.getValue().equals(other.getValue()))
+            && (this.getDisplay() == null ? other.getDisplay() == null : this.getDisplay().equals(other.getDisplay()))
             && (this.getSort() == null ? other.getSort() == null : this.getSort().equals(other.getSort()))
-            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getDeleteStatus() == null ? other.getDeleteStatus() == null : this.getDeleteStatus().equals(other.getDeleteStatus()));
+            && (this.getGoodsTypeId() == null ? other.getGoodsTypeId() == null : this.getGoodsTypeId().equals(other.getGoodsTypeId()))
+            && (this.getDeleteStatus() == null ? other.getDeleteStatus() == null : this.getDeleteStatus().equals(other.getDeleteStatus()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
     }
 
     @Override
@@ -166,10 +167,12 @@ public class ShopGoodsSpecification implements Serializable {
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getValue() == null) ? 0 : getValue().hashCode());
+        result = prime * result + ((getDisplay() == null) ? 0 : getDisplay().hashCode());
         result = prime * result + ((getSort() == null) ? 0 : getSort().hashCode());
-        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
-        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getGoodsTypeId() == null) ? 0 : getGoodsTypeId().hashCode());
         result = prime * result + ((getDeleteStatus() == null) ? 0 : getDeleteStatus().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         return result;
     }
 }

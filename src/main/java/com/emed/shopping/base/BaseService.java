@@ -1,6 +1,7 @@
 package com.emed.shopping.base;
 
 import com.github.pagehelper.PageInfo;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,9 @@ public interface BaseService<T> {
      * @param <T extend T>
      */
     List<T> select(T record);
+
+    List<T> selectByExample(Example example);
+
     List<T> select(T record, String order);
     /**
      * 根据实体类不为null的字段查询总数,条件全部使用=号and条件

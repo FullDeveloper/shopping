@@ -21,6 +21,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>新增规格</title>
     <link href="${basePath}/resources/common/css/templates.css" rel="stylesheet"/>
+    <link href="${basePath}/resources/common/plugins/jquery-confirm/jquery-confirm.min.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">

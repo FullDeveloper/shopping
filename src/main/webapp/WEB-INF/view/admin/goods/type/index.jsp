@@ -71,11 +71,68 @@
         window.location.href = "/goods/type/addPage";
     }
 
+    function updateAction(id) {
+        window.location.href = "/goods/type/updatePage?id="+id;
+    }
+
+    function deleteAction(id) {
+        $.confirm({
+            type: 'red',
+            animationSpeed: 300,
+            title: false,
+            content: '确定删除该类型吗(同时将删除该类型关联的所有属性、品牌、规格)？',
+            buttons: {
+                confirm: {
+                    text: '确认',
+                    btnClass: 'waves-effect waves-button',
+                    action: function () {
+                        $.post('${basePath}/goods/type/deleteGoodsType',{id:id},function(data){
+                            if(data.code == 1){
+                                $.confirm({
+                                    theme: 'dark',
+                                    animation: 'rotateX',
+                                    closeAnimation: 'rotateX',
+                                    title: false,
+                                    content: data.message,
+                                    buttons: {
+                                        confirm: {
+                                            text: '确认',
+                                            btnClass: 'waves-effect waves-button waves-light'
+                                        }
+                                    }
+                                });
+                            } else{
+                                $.confirm({
+                                    theme: 'dark',
+                                    animation: 'rotateX',
+                                    closeAnimation: 'rotateX',
+                                    title: false,
+                                    content: data.message,
+                                    buttons: {
+                                        confirm: {
+                                            text: '确认',
+                                            btnClass: 'waves-effect waves-button waves-light'
+                                        }
+                                    }
+                                });
+                            }
+                            $table.bootstrapTable('refresh');
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    btnClass: 'waves-effect waves-button'
+                }
+            }
+        });
+    }
+
     // 格式化操作按钮
     function actionFormatter(value, row, index) {
         return [
-            '<a class="update" href="javascript:;" onclick="updateAction()" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>　',
-            '<a class="delete" href="javascript:;" onclick="deleteAction()" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>'
+            '<a class="update" href="javascript:;" onclick="updateAction('+row.id+')" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>　',
+            '<a class="delete" href="javascript:;" onclick="deleteAction('+row.id+')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>'
         ].join('');
     }
 </script>

@@ -87,7 +87,8 @@
 <body style="overflow: auto">
 <div class="panel panel-widget forms-panel">
     <form id="saveForm">
-    <div class="forms">
+        <input name="id" type="hidden" id="id" value="${goodsType.id}"/>
+        <div class="forms">
         <div class="form-grids widget-shadow" data-example-id="basic-forms">
             <div class="form-title">
                 <h4>类型管理</h4>
@@ -95,11 +96,11 @@
             <div class="form-body column">
                     <div class="form-group col-lg-3 col-sm-3" >
                         <label for="name">类型名称</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="类型名称" />
+                        <input type="text" class="form-control" id="name" value="${goodsType.name}" name="name" placeholder="类型名称" />
                     </div>
                     <div class="form-group col-lg-3 col-sm-3" >
                         <label for="sort">排序</label>
-                        <input type="text" class="form-control" id="sort" name="sort" placeholder="排序" />
+                        <input type="text" class="form-control" id="sort" value="${goodsType.sort}" name="sort" placeholder="排序" />
                     </div>
             </div>
             <div class="form-title">
@@ -115,7 +116,7 @@
                     <c:forEach items="${goodsSpecifications}" var="item" varStatus="status">
                      <tr>
                         <td>
-                            <input type="checkbox" name="propertyIds" value="${item.id}" />
+                            <input type="checkbox" name="propertyIds" <c:if test="${item.checked}">checked</c:if> value="${item.id}" />
                         </td>
                          <td>${item.name}</td>
                          <td>
@@ -136,14 +137,14 @@
                 <h4>选择关联品牌</h4>
             </div>
             <div class="form-body column">
-                <c:forEach items="${categoryList}" var="item" varStatus="status">
+                <c:forEach items="${brandCategories}" var="item" varStatus="status">
                     <div class="column" style="margin:5px;">
                         <h6 style="font-weight: bold">${item.name}</h6>
                         <div style="display: flex;flex-direction: row;margin-top:8px;flex-wrap: wrap">
                             <c:forEach items="${item.goodsBrandList}" var="itemSub" varStatus="status">
                                 <div style="width: 25%;text-align: left">
                                     <label for="${itemSub.name}${status.index}">${itemSub.name}</label>
-                                    <input type="checkbox" id="${itemSub.name}${status.index}" name="brandId" value="${itemSub.id}">
+                                    <input type="checkbox" id="${itemSub.name}${status.index}" <c:if test="${itemSub.checked}">checked</c:if> name="brandId" value="${itemSub.id}">
                                 </div>
                             </c:forEach>
                         </div>
@@ -162,18 +163,22 @@
                         <td width="558"><strong>显示</strong></td>
                         <td width="558"><strong>操作</strong></td>
                     </tr>
+                    <c:forEach items="${goodsTypeProperties}" var="item">
                     <tr>
                         <td width="82">
-                            <input class="form-control" type="number" name="sort_1"  />
+                            <input class="form-control" type="hidden" name="id_1" value="${item.id}"  />
+                            <input class="form-control" type="number" name="sort_1" value="${item.sort}"  />
                         </td>
                         <td width="271">
-                            <input class="form-control" type="text" name="name_1"  />
+                            <input class="form-control" type="text" name="name_1" value="${item.name}" />
                         </td>
                         <td width="558">
-                            <input class="form-control" type="text" name="value_1"  />
+                            <input class="form-control" type="text" name="value_1"  value="${item.value}"/>
                         </td>
                         <td width="558">
-                            <input class="display" type="checkbox" value="1"  name="display_1" checked />
+                            <input class="display" type="checkbox" value="1"
+                                   <c:if test="${item.display == 1}">checked</c:if>
+                                   name="display_1"  />
                         </td>
                         <td width="558">
                             <a class="delete" href="javascript:;" onclick="remove_goods_spec_property(this.parentNode.parentNode,'')" data-toggle="tooltip" title="Remove">
@@ -181,6 +186,7 @@
                             </a>
                         </td>
                     </tr>
+                    </c:forEach>
                     <tr>
                         <td colspan="4"><span class="newclass"><a href="javascript:void(0);" onclick="add_goods_spec_property();">新增规格值</a></span></td>
                         <td>&nbsp;</td>

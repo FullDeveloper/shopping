@@ -21,6 +21,12 @@ public class CommonUtil {
         return s == null ? "" : s.toString().trim();
     }
 
+
+    public static boolean collectionIsNotEmpty(List list){
+
+        return list != null && list.size()>0;
+    }
+
     public static Long nullToLong(Object s){
         if(isEmpty(s)){
             return null;
