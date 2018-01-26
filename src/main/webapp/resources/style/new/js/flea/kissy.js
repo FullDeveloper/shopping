@@ -2273,7 +2273,7 @@ build time: Jan 10 14:34
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
  * @fileOverview  loader
  * @author lifesinger@gmail.com,yiminghe@gmail.com,lijing00333@163.com
- * @description constant member and common method holder
+ * @description constant user and common method holder
  */
 (function(S, loader, data) {
     if ("require" in this) {
@@ -9540,9 +9540,9 @@ KISSY.add('json', function (S, JSON) {
  };
 
  You can provide an optional replacer method. It will be passed the
- key and value of each member, with this bound to the containing
+ key and value of each user, with this bound to the containing
  object. The value that is returned from your method will be
- serialized. If your method returns undefined, then the member will
+ serialized. If your method returns undefined, then the user will
  be excluded from the serialization.
 
  If the replacer parameter is an array of strings, then it will be
@@ -9588,7 +9588,7 @@ KISSY.add('json', function (S, JSON) {
  transform the results. It receives each of the keys and values,
  and its return value is used instead of the original value.
  If it returns what it received, then the structure is not modified.
- If it returns undefined then the member is deleted.
+ If it returns undefined then the user is deleted.
 
  Example:
 
@@ -9710,8 +9710,8 @@ KISSY.add("json/json2", function(S, UA) {
 // Produce a string from holder[key].
 
         var i,          // The loop counter.
-            k,          // The member key.
-            v,          // The member value.
+            k,          // The user key.
+            v,          // The user value.
             length,
             mind = gap,
             partial,
@@ -9820,7 +9820,7 @@ KISSY.add("json/json2", function(S, UA) {
                     }
                 }
 
-// Join all of the member texts together, separated with commas,
+// Join all of the user texts together, separated with commas,
 // and wrap them in braces.
 
                 v = partial.length === 0 ? '{}' :

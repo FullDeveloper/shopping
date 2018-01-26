@@ -60,5 +60,6 @@ public class WebMvcCustomConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/404").setViewName("/404");
         registry.addViewController("/error").setViewName("/error");
         registry.addViewController("/500").setViewName("/500");
+        registry.addViewController("/top").setViewName("/web/top");
     }
 }

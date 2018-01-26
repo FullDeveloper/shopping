@@ -107,7 +107,7 @@ $.extend({
 });
 
 /**
- * Returns the metadata object for the first member of the jQuery object.
+ * Returns the metadata object for the first user of the jQuery object.
  *
  * @name metadata
  * @descr Returns element's metadata object

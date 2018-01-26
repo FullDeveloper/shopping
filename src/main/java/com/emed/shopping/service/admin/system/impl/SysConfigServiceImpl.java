@@ -76,7 +76,7 @@ public class SysConfigServiceImpl extends BaseServiceImpl<ShopSysConfig> impleme
             if (sc.getMemberIcon() == null) {
                 Accessory memberIcon = new Accessory();
                 memberIcon.setPath("resources/style/common/images");
-                memberIcon.setName("member.jpg");
+                memberIcon.setName("user.jpg");
                 sc.setMemberIcon(memberIcon);
             }*/
             if ((sc.getSecurityCodeType() == null) ||
@@ -117,7 +117,7 @@ public class SysConfigServiceImpl extends BaseServiceImpl<ShopSysConfig> impleme
         sc.setStoreImage(storeImage);
         Accessory memberIcon = new Accessory();
         memberIcon.setPath("resources/style/common/images");
-        memberIcon.setName("member.jpg");
+        memberIcon.setName("user.jpg");
         sc.setMemberIcon(memberIcon);*/
         return sc;
     }

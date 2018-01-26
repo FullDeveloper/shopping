@@ -2,6 +2,7 @@ package com.emed.shopping.dao.model.admin.goods;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -106,6 +107,7 @@ public class ShopGoodsBrand implements Serializable {
      */
     private String remark;
 
+    @Transient
     private Boolean checked;
 
     public Boolean getChecked() {
