@@ -195,6 +195,4 @@ public class StoreManagerController {
             return new BaseResult(400,"新增店铺失败!",shopStore);
         }
     }
-
-
 }

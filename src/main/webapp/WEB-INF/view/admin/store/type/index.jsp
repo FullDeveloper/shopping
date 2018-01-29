@@ -131,7 +131,6 @@
     }
 
     // 编辑
-    var updateDialog;
     function updateAction() {
         var rows = $table.bootstrapTable('getSelections');
         if (rows.length != 1) {
@@ -148,7 +147,7 @@
                 }
             });
         } else {
-            window.location.href = "/store/manager/toEditStore?id="+rows[0].id;
+            window.location.href = "/store/type/toEditType?id="+rows[0].id;
         }
     }
 
@@ -170,11 +169,19 @@
                 }
             });
         }else{
+            var items="";
+            if(rows.length!=1){
+                for(var i = 0;i<rows.length;i++){
+                   items += rows[i].id+",";
+                }
+            }else if(rows.length == 1){
+                items = rows[0].id
+            }
             deleteDialog = $.confirm({
                 type: 'red',
                 animationSpeed: 300,
                 title: false,
-                content: '确认删除该店铺吗？',
+                content: '确认删除选中的店铺吗？',
                 buttons: {
                     confirm: {
                         text: '确认',
@@ -182,7 +189,7 @@
                         action: function () {
                             $.ajax({
                                 type: 'get',
-                                url: '${basePath}/store/type/deleteTypeById?id=' + rows[0].id,
+                                url: '${basePath}/store/type/deleteTypeById?id=' + items,
                                 success: function(result) {
                                     deleteDialog.close();
                                     $table.bootstrapTable('refresh');
