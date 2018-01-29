@@ -37,25 +37,25 @@ public class SysConfigServiceImpl extends BaseServiceImpl<ShopSysConfig> impleme
             if ((sc.getImageSaveType() == null) || (sc.getImageSaveType().equals(""))) {
                 sc.setImageSaveType("sidImg");
             }
-            if (sc.getImageFileSize() == 0) {
+            if (sc.getImageFileSize() == null || sc.getImageFileSize() == 0) {
                 sc.setImageFileSize(1024);
             }
-            if (sc.getSmallWidth() == 0) {
+            if (sc.getSmallWidth() == null ||  sc.getSmallWidth() == 0) {
                 sc.setSmallWidth(160);
             }
-            if (sc.getSmallHeight() == 0) {
+            if (sc.getSmallHeight() == null || sc.getSmallHeight() == 0) {
                 sc.setSmallHeight(160);
             }
-            if (sc.getMiddleWidth() == 0) {
+            if (sc.getMiddleWidth() == null || sc.getMiddleWidth() == 0) {
                 sc.setMiddleWidth(300);
             }
-            if (sc.getMiddleHeight() == 0) {
+            if (sc.getMiddleHeight() == null || sc.getMiddleHeight() == 0) {
                 sc.setMiddleHeight(300);
             }
-            if (sc.getBigHeight() == 0) {
+            if (sc.getBigHeight() == null || sc.getBigHeight() == 0) {
                 sc.setBigHeight(1024);
             }
-            if (sc.getBigWidth() == 0) {
+            if (sc.getBigWidth() == null || sc.getBigWidth() == 0) {
                 sc.setBigWidth(1024);
             }
             if ((sc.getImageSuffix() == null) || (sc.getImageSuffix().equals(""))) {

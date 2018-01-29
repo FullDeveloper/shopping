@@ -36,14 +36,15 @@ function login() {
 
 		},
 		success: function(json){
+			console.log(json);
 			if (json.code == 1) {
-				location.href = json.data;
+				window.location.href = "/admin/index"
 			} else {
-				alert(json.data);
-				if (10101 == json.code) {
+				alert(json.message);
+				if (302 == json.code) {
 					$('#username').focus();
 				}
-				if (10102 == json.code) {
+				if (303 == json.code) {
 					$('#password').focus();
 				}
 			}

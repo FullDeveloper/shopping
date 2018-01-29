@@ -1,5 +1,6 @@
 package com.emed.shopping.config.springmvc;
 
+import com.emed.shopping.interceptor.UpmsInterceptor;
 import com.emed.shopping.util.SpringContextUtil;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -8,10 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -27,6 +25,15 @@ import org.springframework.web.servlet.view.JstlView;
 public class WebMvcCustomConfig extends WebMvcConfigurerAdapter {
 
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(upmsInterceptor()).addPathPatterns("/**");
+    }
+
+    @Bean
+    public UpmsInterceptor upmsInterceptor(){
+        return new UpmsInterceptor();
+    }
 
     @Bean
     public InternalResourceViewResolver viewResolver(){
@@ -55,7 +62,7 @@ public class WebMvcCustomConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("/sso/login");
+        registry.addViewController("/login").setViewName("/admin/login");
         registry.addViewController("/403").setViewName("/403");
         registry.addViewController("/404").setViewName("/404");
         registry.addViewController("/error").setViewName("/error");

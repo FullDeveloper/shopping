@@ -5,13 +5,18 @@ import com.emed.shopping.dao.model.admin.goods.ShopGoods;
 import com.emed.shopping.dao.model.admin.goods.ShopGoodsBrand;
 import com.emed.shopping.dao.model.admin.goods.ShopGoodsClass;
 import com.emed.shopping.dao.model.admin.store.ShopStore;
+import com.emed.shopping.dao.model.admin.system.ShopAccessory;
 import com.emed.shopping.service.admin.goods.GoodsBrandService;
 import com.emed.shopping.service.admin.goods.GoodsClassService;
 import com.emed.shopping.service.admin.goods.GoodsService;
 import com.emed.shopping.service.admin.store.ShopStoreService;
+import com.emed.shopping.service.admin.system.AccessoryService;
+import com.emed.shopping.service.admin.system.SysConfigService;
 import com.emed.shopping.util.CommonUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +47,10 @@ public class GoodsController {
     private GoodsClassService goodsClassService;
     @Autowired
     private ShopStoreService shopStoreService;
+    @Autowired
+    private SysConfigService sysConfigService;
+    @Autowired
+    private AccessoryService accessoryService;
 
     @RequestMapping(value = "/index")
     public String index(Model model){
@@ -79,7 +89,7 @@ public class GoodsController {
     }
 
     @RequestMapping(value = "/goodsDetails")
-    public String goodsDetails(Long id , Model model){
+    public String goodsDetails(Long id , Model model , HttpServletRequest request){
         String retUrl = "/web/";
         //1.查到这个商品
         ShopGoods goods = goodsService.selectByPrimaryKey(id);
@@ -96,10 +106,25 @@ public class GoodsController {
             //设置点击次数+1
             goods.setGoodsClick(goods.getGoodsClick()+1);
             //设置团购
+            Subject subject = SecurityUtils.getSubject();
             goodsService.updateByPrimaryKey(goods);
+            if(subject.isPermitted("shop:admin:manager")){
+                System.out.println(1);
+            }
             if(store.getStoreStatus() == 2){
+                //商品信息
                 model.addAttribute("goods",goods);
+                //店铺信息
                 model.addAttribute("store",store);
+                //用户信息
+                model.addAttribute("user", request.getSession().getAttribute("currentUser"));
+                //系统配置信息  websiteName
+                model.addAttribute("config", sysConfigService.getSysConfig());
+                if(store.getStoreBannerId() != null){
+                    //店铺图片信息
+                    ShopAccessory accessory = accessoryService.selectByPrimaryKey(store.getStoreBannerId());
+                    model.addAttribute("banner",accessory);
+                }
                 //查询出这个店铺中拥有的类型
             }
             return retUrl;

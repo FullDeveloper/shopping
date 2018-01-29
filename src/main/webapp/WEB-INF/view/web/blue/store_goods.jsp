@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%--<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>--%>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <c:set var="basePath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE HTML>
 <html lang="zh-cn">
@@ -26,5 +26,9 @@
 </head>
 <body>
 <jsp:include page="/top" />
-
+<jsp:include page="/storeHead.htm?id=${store.id}" />
+<c:set var="banner" value="${basePath}/resoureces/style/shop/${store.template}/images/banner.jpg"/>
+<c:if test="${store.storeBannerId != null}">
+  <c:set var="banner" value="${basePath}/${banner.path}/${banner.name}"/>
+</c:if>
 </body>
