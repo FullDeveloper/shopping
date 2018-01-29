@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: 周润斌
+  Date: 2018/1/16 0016
+  Time: 10:08
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -88,105 +95,113 @@
             <form id="formId">
                 <div class="form-grids widget-shadow" data-example-id="basic-forms">
                     <div class="form-title">
-                        <h4>店铺修改</h4>
-                        <div>
-                            <input type="hidden" name="id" value="${requestScope.map.id}"/>
-                        </div>
+                        <h4>新增店铺</h4>
                     </div>
                     <div class="form-body column">
-                        <div class="form-group col-lg-3 col-sm-3" >
-                            <label for="storeName">店铺名称</label>
-                            <input type="text" class="form-control" id="storeName" value="${requestScope.map.storeName}" name="storeName" placeholder="店铺名称">
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-3" >
-                            <label for="userName">店主用户名</label>
-                            <input type="text" class="form-control" id="userName"  value="${requestScope.map.userName}" name="userName" placeholder="店主用户名">
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-3" >
-                            <label for="storeOwer">店主姓名</label>
-                            <input type="text" class="form-control" id="storeOwer" value="${requestScope.map.storeOwer}" name="storeOwer" placeholder="店主姓名">
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-3" >
-                            <label for="className">店铺类型</label>
-                            <select id="className" class="form-control" name="className">
-                                <option value="0">请选择店铺类型</option>
-                                <c:forEach var="shopStoreClass" items="${requestScope.shopStoreClasses}">
-                                    <option value="${shopStoreClass.id}">${shopStoreClass.className}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-3" style="flex: 1;width: 1000px">
-                            <label for="Province">店铺所在地</label>
-                            <div style="flex: 1;">
-                                <div class="form-body" style="float: left;"> ${requestScope.map.parentName} | ${requestScope.map.areaName}</div>
-                                <div style="float: left;"><input type="button" value="修改地址" onclick="showSelect()" class="btn btn-success" id="showOrHide"></div>
-                            </div>
-                            <div id="select1" class="hidden" style="float:none">
-                                <div style="float:left">
-                                    <select id="Province" class="form-control" name="Province">
-                                        <option value="0">==请选择省==</option>
-                                    </select>
-                                </div>
-                                <div style="float:left">
-                                    <select id="City" class="form-control" name="City">
-                                        <option value="0">==请选择市==</option>
-                                    </select>
-                                </div>
-                                <div style="float:left">
-                                    <select id="Village" class="form-control" name="Village">
-                                        <option value="0">==请选择区==</option>
-                                    </select>
-                                </div>
+                        <div class="form-body" style="margin-bottom: -45px">
+                            <div class="form-group col-lg-3 col-sm-3" >
+                                <label for="userName">店主用户名</label>
+                                <input type="text" class="form-control" id="userName" onblur="checkStore()"  name="userName" placeholder="店主用户名">
                             </div>
                         </div>
-                        <div class="form-group col-lg-3 col-sm-3" >
-                            <label for="storeAddress">详细地址</label>
-                            <input type="text" class="form-control" id="storeAddress" value="${requestScope.map.storeAddress}" name="storeAddress" placeholder="详细地址">
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-3" >
-                            <label for="storeZip">店铺邮编</label>
-                            <input type="text" class="form-control" id="storeZip" value="${requestScope.map.storeZip}" name="storeZip" placeholder="店铺邮编">
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-3" >
-                            <label for="storeTelephone">店铺联系电话</label>
-                            <input type="text" class="form-control" id="storeTelephone" value="${requestScope.map.storeTelephone}" name="storeTelephone" placeholder="店铺联系电话">
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-3" >
-                            <label for="storeOwer">店铺等级</label>
-                            <input type="text" class="form-control" readonly id="gradeName" value="${requestScope.map.gradeName}" name="gradeName" placeholder="店铺等级">
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-3" >
-                            <label for="validity">有效期至</label>
-                            <input type="date" class="form-control" id="validity" value="${requestScope.map.validity}" name="validity" placeholder="店铺联系电话">
-                            <span style="background-color: #ced1d2;float: left;margin-top: 5px">为空表示无期限</span>
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-3" >
-                            <label for="storeStatus">店铺状态</label>
-                            <select id="storeStatus" class="form-control" name="storeStatus">
-                                <option value="0">请选择店铺状态</option>
-                                <option value="1">等待审核</option>
-                                <option value="2">正常营业</option>
-                                <option value="3">违规关闭</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-3 column">
-                            <label for="recommend">是否推荐</label>
-                            <input class="push" id="recommend" name="recommend" <c:if test="${requestScope.map.storeRecommend==1}">checked</c:if> type="checkbox"/>
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-3 column">
-                            <label>认证情况</label>
-                            <div>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="cardApprove" <c:if test="${requestScope.map.cardApprove==1}">checked</c:if> value="实名认证">实名认证
-                                </label>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="realstoreApprove" <c:if test="${requestScope.map.realstoreApprove==1}">checked</c:if> value="实体店铺认证">实体店铺认证
-                                </label>
+
+                        <div id="showAll" class="hidden form-body column">
+                            <div class="form-group col-lg-3 col-sm-3" >
+                                <label for="storeName">店铺名称</label>
+                                <input type="text" class="form-control" id="storeName"  name="storeName" placeholder="店铺名称">
+                            </div>
+                            <div class="form-group col-lg-3 col-sm-3" >
+                                <label for="storeOwer">店主姓名</label>
+                                <input type="text" class="form-control" id="storeOwer"  name="storeOwer" placeholder="店主姓名">
+                            </div>
+                            <div class="form-group col-lg-3 col-sm-3" >
+                                <label for="storeOwerCard">店主身份证</label>
+                                <input type="text" class="form-control" id="storeOwerCard"  name="storeOwerCard" placeholder="店主身份证">
+                            </div>
+                            <div class="form-group col-lg-3 col-sm-3" >
+                                <label for="className">店铺类型</label>
+                                <select id="className" class="form-control" name="className">
+                                    <option value="0">请选择店铺类型</option>
+                                    <c:forEach var="shopStoreClass" items="${requestScope.shopStoreClasses}">
+                                        <option value="${shopStoreClass.id}">${shopStoreClass.className}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-3 col-sm-3" style="flex: 1;width: 1000px">
+                                <label for="Province">店铺所在地</label>
+                                <div id="select1" style="float:none">
+                                    <div style="float:left">
+                                        <select id="Province" class="form-control" name="Province">
+                                            <option value="0">==请选择省==</option>
+                                        </select>
+                                    </div>
+                                    <div style="float:left">
+                                        <select id="City" class="form-control" name="City">
+                                            <option value="0">==请选择市==</option>
+                                        </select>
+                                    </div>
+                                    <div style="float:left">
+                                        <select id="Village" class="form-control" name="Village">
+                                            <option value="0">==请选择区==</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-3 col-sm-3" >
+                                <label for="storeAddress">详细地址</label>
+                                <input type="text" class="form-control" id="storeAddress" name="storeAddress" placeholder="详细地址">
+                            </div>
+                            <div class="form-group col-lg-3 col-sm-3" >
+                                <label for="storeZip">店铺邮编</label>
+                                <input type="text" class="form-control" id="storeZip" name="storeZip" placeholder="店铺邮编">
+                            </div>
+                            <div class="form-group col-lg-3 col-sm-3" >
+                                <label for="storeTelephone">店铺联系电话</label>
+                                <input type="text" class="form-control" id="storeTelephone" name="storeTelephone" placeholder="店铺联系电话">
+                            </div>
+                            <div class="form-group col-lg-3 col-sm-3" >
+                                <label for="gradeName">店铺等级</label>
+                                <select id="gradeName" class="form-control" name="gradeName">
+                                    <option value="0">请选择店铺等级</option>
+                                    <c:forEach var="shopStoreGrades" items="${requestScope.shopStoreGrades}">
+                                        <option value="${shopStoreGrades.id}">${shopStoreGrades.gradeName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-3 col-sm-3" >
+                                <label for="validity">有效期至</label>
+                                <input type="date" class="form-control" id="validity" name="validity" placeholder="店铺联系电话">
+                                <span style="background-color: #ced1d2;float: left;margin-top: 5px">为空表示无期限</span>
+                            </div>
+                            <div class="form-group col-lg-3 col-sm-3" >
+                                <label for="storeStatus">店铺状态</label>
+                                <select id="storeStatus" class="form-control" name="storeStatus">
+                                    <option value="0">请选择店铺状态</option>
+                                    <option value="1">等待审核</option>
+                                    <option value="2">正常营业</option>
+                                    <option value="3">违规关闭</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-3 col-sm-3 column">
+                                <label for="recommend">是否推荐</label>
+                                <input class="push" id="recommend" name="recommend" checked type="checkbox"/>
+                            </div>
+                            <div class="form-group col-lg-3 col-sm-3 column">
+                                <label>认证情况</label>
+                                <div>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" name="cardApprove" value="实名认证">实名认证
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" name="realstoreApprove" value="实体店铺认证">实体店铺认证
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-3 col-sm-3" >
+                                <a href="javascript:" class="btn btn-success" onclick="submitInfo()">提交</a>
                             </div>
                         </div>
-                        <div class="form-group col-lg-3 col-sm-3" >
-                            <a href="javascript:" class="btn btn-success" onclick="submitInfo()">提交</a>
-                        </div>
+
                     </div>
                 </div>
             </form>
@@ -204,7 +219,7 @@
             $.ajax({
                 type: 'post',
                 data: $("#formId").serialize(),
-                url: '${pageContext.request.contextPath}/store/manager/updateStoreInfo',
+                url: '${pageContext.request.contextPath}/store/manager/saveStoreInfo',
                 success: function(result) {
                    if(result.code==200){
                        $.confirm({
@@ -231,11 +246,6 @@
             });
 
         }
-
-        function showSelect() {
-            $("#select1").removeClass("hidden");
-        }
-
         $(function () {
             //默认绑定省
             ProviceBind();
@@ -266,13 +276,12 @@
                 type: 'get',
                 url: '${basePath}/store/manager/getAddress?item=province&id=0',
                 success: function(data) {
-                    console.log('result>',data)
-                        //从服务器获取数据进行绑定
-                        $.each(data, function (i, item) {
-                            str += "<option value=" + item.id + ">" + item.areaName + "</option>";
-                        })
-                        //将数据添加到省份这个下拉框里面
-                        $("#Province").append(str);
+                    //从服务器获取数据进行绑定
+                    $.each(data, function (i, item) {
+                        str += "<option value=" + item.id + ">" + item.areaName + "</option>";
+                    })
+                    //将数据添加到省份这个下拉框里面
+                    $("#Province").append(str);
 
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -282,6 +291,49 @@
                         closeAnimation: 'rotateX',
                         title: false,
                         content: textStatus,
+                        buttons: {
+                            confirm: {
+                                text: '确认',
+                                btnClass: 'waves-effect waves-button waves-light'
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        function checkStore() {
+            $.ajax({
+                type: 'get',
+                url: '${basePath}/store/manager/toCheckStore?userName='+$("#userName").val(),
+                success: function(result) {
+
+                    if(result.code==200){
+                        $("#showAll").removeClass("hidden");
+                    } else{
+                        $("#showAll").addClass("hidden");
+                        $.confirm({
+                            theme: 'dark',
+                            animation: 'rotateX',
+                            closeAnimation: 'rotateX',
+                            title: false,
+                            content: result.message,
+                            buttons: {
+                                confirm: {
+                                    text: '确认',
+                                    btnClass: 'waves-effect waves-button waves-light'
+                                }
+                            }
+                        });
+                    }
+
+                },
+                error: function(result) {
+                    $.confirm({
+                        theme: 'dark',
+                        animation: 'rotateX',
+                        closeAnimation: 'rotateX',
+                        title: false,
+                        content: result.message,
                         buttons: {
                             confirm: {
                                 text: '确认',
@@ -390,10 +442,8 @@
             offColor : "danger",
             size : "small",
             onSwitchChange : function(event, state) {
-                //后台修改状态代码
-                $.post('${basePath}/store/manager/changeRecommend?id='+"${requestScope.map.id}"+'&flag='+state,null,function(data){
-                    console.log(data)
-                });
+
+
             }
         });
     </script>

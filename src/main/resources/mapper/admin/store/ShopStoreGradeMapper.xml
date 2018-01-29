@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.emed.shopping.dao.mapper.admin.store.ShopStoreGradeMapper" >
+  <resultMap id="BaseResultMap" type="com.emed.shopping.dao.model.admin.store.ShopStoreGrade" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="delete_status" property="deleteStatus" jdbcType="BIT" />
+    <result column="add_funciton" property="addFunciton" jdbcType="VARCHAR" />
+    <result column="audit" property="audit" jdbcType="BIT" />
+    <result column="goods_count" property="goodsCount" jdbcType="INTEGER" />
+    <result column="grade_level" property="gradeLevel" jdbcType="INTEGER" />
+    <result column="grade_name" property="gradeName" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="VARCHAR" />
+    <result column="sequence" property="sequence" jdbcType="INTEGER" />
+    <result column="spaceSize" property="spacesize" jdbcType="REAL" />
+    <result column="sysGrade" property="sysgrade" jdbcType="BIT" />
+    <result column="templates" property="templates" jdbcType="VARCHAR" />
+    <result column="acount_num" property="acountNum" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.emed.shopping.dao.model.admin.store.ShopStoreGrade" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, add_time, delete_status, add_funciton, audit, goods_count, grade_level, grade_name, 
+    price, sequence, spaceSize, sysGrade, templates, acount_num
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+
+
+</mapper>

@@ -11,4 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface ShopStoreService extends BaseService<ShopStore> {
     BaseResult updateStoreInfo(HttpServletRequest request);
+
+
+    void insertAndGetId(ShopStore shopStore);
 }

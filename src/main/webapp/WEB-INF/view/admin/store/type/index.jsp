@@ -21,12 +21,12 @@
 <div id="main">
     <div id="toolbar" style="flex: 1;">
         <div style="float: left">
-            <a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增店铺</a>
-            <a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑店铺</a>
-            <a class="waves-effect waves-button" href="javascript:;" onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除店铺</a>
+            <a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增类型</a>
+            <a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑类型</a>
+            <a class="waves-effect waves-button" href="javascript:;" onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除类型</a>
         </div>
         <div style="float:left;margin-left: 100px">
-            <input id="keywords" type="text" name="keywords" class="form-control" onblur="searchCondition()" placeholder="输入店铺名称进行搜索"/>
+            <input id="keywords" type="text" name="keywords" class="form-control" onblur="searchCondition()" placeholder="输入类型名称进行搜索"/>
         </div>
     </div>
     <table id="table"></table>
@@ -39,7 +39,7 @@
     $(function() {
         // bootstrap table初始化
         $table.bootstrapTable({
-            url: '${basePath}/store/manager/list',
+            url: '${basePath}/store/type/list',
             height: getHeight(),
             striped: true,
             search: false,
@@ -64,14 +64,12 @@
             queryParams: queryParams,
             columns: [
                 {field: 'ck', checkbox: true},
-                {field: 'storeName', title: '店铺名称',align: 'center'},
-                {field: '', title: '店主用户|店主姓名',align: 'center',formatter:'nameFormatter'},
-                {field: '', title: '所在地',align: 'center',formatter:'areaFormatter'},
-                {field: 'className', title: '店铺类别',align: 'center'},
-                {field: 'gradeName', title: '店铺等级',align: 'center'},
-                {field: 'validity', title: '有效期至',align: 'center',formatter:'validityFormatter'},
-                {field: 'storeStatus', title: '状态',align: 'center',formatter: 'statusFormatter'},
-                {field: 'storeRecommend', title: '推荐',align: 'center',formatter: 'recommendFormatter'},
+                {field: 'gradeName', title: '等级名称',align: 'center'},
+                {field: 'goodsCount', title: '允许发布商品数量(件)',align: 'center'},
+                {field: 'acountNum', title: '可选模板(个)',align: 'center'},
+                {field: 'content', title: '收费标准',align: 'center'},
+                {field: 'spacesize', title: '附件空间(M)',align: 'center'},
+                {field: 'audit', title: '需要审核',align: 'center',formatter:'formatterAudit'},
                 {field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}
             ],
             onLoadSuccess: function(){  //加载成功时执行
@@ -107,46 +105,21 @@
         };
     }
 
-    function recommendFormatter(value, row, index) {
-        if (value == "1"){
-            return '<input class="push" type="checkbox" id="'+row.id+'" checked/>';
+    function formatterAudit(value, row, index) {
+        console.log("value>",value)
+        console.log("value>",typeof value)
+        if (value == true){
+            return '<span>是</span>';
         }else{
-            return '<input class="push" type="checkbox" id="'+row.id+'" />';
+            return '<span>否</span>';
         }
 
     }
 
-    function areaFormatter(value, row, index) {
-        return "<span>"+"["+(row.parentName?row.parentName:'')+"] "+(row.areaName?row.areaName:'')+"</span>";
-    }
 
-    function nameFormatter(value, row, index) {
-        return "<span>"+(row.userName?row.userName:'')+"|"+(row.storeOwer?row.storeOwer:'')+"</span>";
-    }
-
-    function validityFormatter(value, row, index) {
-        if(value == ''){
-           return '<span>无限制</span>';
-        }else{
-            return value;
-        }
-    }
-    //处理状态
-    function statusFormatter(value, row, index) {
-        if (value == '1') {
-            return '<span class="label label-warning">审批中</span>';
-        }
-        if (value == '2') {
-            return '<span class="label label-success">正常</span>';
-        }
-        if (value == '3') {
-            return '<span class="label label-danger">关闭</span>';
-
-        }
-    }
     // 新增
     function createAction() {
-        window.location.href = "/store/manager/toAddPage";
+        window.location.href = "/store/type/toAddPage";
     }
 
     // 格式化操作按钮
@@ -209,7 +182,7 @@
                         action: function () {
                             $.ajax({
                                 type: 'get',
-                                url: '${basePath}/store/manager/deleteStoreById?id=' + rows[0].id,
+                                url: '${basePath}/store/type/deleteTypeById?id=' + rows[0].id,
                                 success: function(result) {
                                     deleteDialog.close();
                                     $table.bootstrapTable('refresh');

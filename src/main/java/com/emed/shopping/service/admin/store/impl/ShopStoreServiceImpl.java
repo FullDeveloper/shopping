@@ -48,4 +48,10 @@ public class ShopStoreServiceImpl extends BaseServiceImpl<ShopStore> implements 
         }
 
     }
+
+    @Override
+    public void insertAndGetId(ShopStore shopStore) {
+
+        shopStoreMapper.insertAndGetId(shopStore);
+    }
 }

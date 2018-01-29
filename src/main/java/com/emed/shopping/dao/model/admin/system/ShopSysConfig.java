@@ -404,7 +404,7 @@ public class ShopSysConfig implements Serializable {
     private Long memberIcon;
 
     /**
-     * 允许商店
+     * 允许商店 0是不允许,1是允许
      *
      * @mbg.generated
      */

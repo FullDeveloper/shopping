@@ -72,15 +72,16 @@
         });
         function search_form(){
             var keyword=arguments[0];
-            var type=arguments[1];
+//            var type=arguments[1];
             if(keyword!=""&&keyword!=undefined){
                 jQuery("#keyword").val(keyword);
             }
-            if(type!=""&&type!=undefined){
-                jQuery("#type").val(type);
-            }
-            jQuery("#searchForm").submit();
-            jQuery("#keyword").val("");
+//            if(type!=""&&type!=undefined){
+//                jQuery("#type").val(type);
+//            }
+//            jQuery("#searchForm").submit();
+//            jQuery("#keyword").val("");
+
         }
     </script>
 
