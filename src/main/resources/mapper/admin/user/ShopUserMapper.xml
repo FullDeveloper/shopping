@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.emed.shopping.dao.mapper.admin.store.ShopUserMapper" >
-  <resultMap id="BaseResultMap" type="com.emed.shopping.dao.model.admin.store.ShopUser" >
+<mapper namespace="com.emed.shopping.dao.mapper.admin.user.ShopUserMapper" >
+  <resultMap id="BaseResultMap" type="com.emed.shopping.dao.model.admin.user.ShopUser" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
     <result column="delete_status" property="deleteStatus" jdbcType="VARCHAR" />
@@ -38,7 +38,7 @@
     <result column="years" property="years" jdbcType="INTEGER" />
     <result column="area_id" property="areaId" jdbcType="BIGINT" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.emed.shopping.dao.model.admin.store.ShopUser" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.emed.shopping.dao.model.admin.user.ShopUser" extends="BaseResultMap" >
     <result column="store_quick_menu" property="storeQuickMenu" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
