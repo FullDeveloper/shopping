@@ -7,6 +7,8 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -52,6 +54,25 @@ public class CommonUtil {
                 v = Integer.parseInt(s.toString());
             } catch (Exception localException) {
                 localException.printStackTrace();
+            }
+        return v;
+    }
+
+    public static double mul(Object a,Object b){
+        BigDecimal e = new BigDecimal(nullToDouble(a));
+        BigDecimal f = new BigDecimal(nullToDouble(b));
+        double ret = e.multiply(f).doubleValue();
+        DecimalFormat df = new DecimalFormat("0.00");
+        return Double.valueOf(df.format(ret)).doubleValue();
+    }
+
+    public static double nullToDouble(Object s) {
+        double v = 0.0D;
+        if (s != null)
+            try {
+                v = Double.parseDouble(nullToString(s));
+            } catch (Exception localException) {
+            localException.printStackTrace();
             }
         return v;
     }
